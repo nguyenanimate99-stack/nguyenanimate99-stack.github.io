@@ -86,10 +86,38 @@
     <script src="images.js"></script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        // Tạo biến toàn cục để script.js dùng được
-        window.firebaseLibs = { getAuth, signInWithPopup, GoogleAuthProvider, signOut, initializeApp };
+        // 1. Lấy thư viện
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // 2. Điền mã Config MỚI NHẤT của bạn (từ ảnh image_a986ff.png)
+        const firebaseConfig = {
+            apiKey: "AIzaSyA72xpBaR11aAztYoP--xQ1-19Rt3mRWF8",
+            authDomain: "nguyenanimate-c7bd4.firebaseapp.com",
+            projectId: "nguyenanimate-c7bd4",
+            storageBucket: "nguyenanimate-c7bd4.firebasestorage.app",
+            messagingSenderId: "1018956225311",
+            appId: "1:1018956225311:web:885a2c60a5e7ef201d6e2a"
+        };
+
+        // 3. Khởi động
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // 4. Đưa ra ngoài để script.js dùng được
+        window.authServices = { auth, provider, signInWithPopup, signOut };
+
+        // 5. Giữ đăng nhập khi F5
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Đã đăng nhập:", user.displayName);
+                if (window.onLoginSuccess) window.onLoginSuccess(user);
+            } else {
+                console.log("Chưa đăng nhập");
+                if (window.handleLogout) window.handleLogout(true); 
+            }
+        });
     </script>
 
     <script src="script.js"></script>
