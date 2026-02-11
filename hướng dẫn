@@ -1,0 +1,78 @@
+KIỂM TRA NẾU ĐÔI TÊN
+1
+*data.js
+const MENU_CONFIG
+mục ++ TÊN MỚI
+
+2
+const TAG_LIST
+mục ++ TÊN MỚI giống bên trên
+
+3
+Dữ liệu ảnh
+const ALL_IMAGES, khớp tên để hiện ảnh
+
+4
+
+*script.js
+5 chú ý đây là tên của menu
+const CONFIG
+currentCategory là "TÊN TRÊN THANH MENU", trong file data.js bạn đặt tên menu là "TÊN TRÊN THANH MENU"
+currentTab: "TÊN MỚI",
+currentTag: TÊN MỚI
+
+6
+function updateActiveMenu kiểm tra if (CONFIG.currentCategory === "TÊN TRÊN THANH MENU").
+
+Tại sao lỗi: Như trên, tên đúng phải là "NTÊN TRÊN THANH MENU". Nếu bạn để KHÁC, nút "TÊN TRÊN THANH MENU" trên thanh menu sẽ không bao giờ sáng đèn.
+
+7. Lỗi ở phần Khởi Động (Cuối cùng file)
+Dòng window.addEventListener, bạn đang gọi:("TÊN CHƯA ĐỔI"
+Tại sao lỗi: Trong data.js nếu bạn đã đổi tên tab thành "TÊN MỚI" rồi. Gọi "TÊN CHƯA ĐỔI" thì web không tìm thấy dữ liệu để chạy 
+Đổi tất cả chữ TÊN CHƯA ĐỔI thành TÊN MỚI
+
+
+thêm nút và các tag con
+
+1 index.html
+copy mục ở trên sao chếp xuống dưới
+
+<div id="btn-tenkodau" class="nav-item" onclick="switchCategory('TÊN_TRÊN_MENU')">
+        TÊN MENU
+</div>
+
+xóa mục dưới nếu là mục thay thế
+
+BƯỚC 2: Sửa file data.js 
+*const MENU_CONFIGthêm mục
+
+"TÊN_TRÊN_MENU": ["KÍ_TỰ_TẮT_HIEN_DAI", "KÍ_TỰ_TẮT_CO_XUA"],
+
+chú ý, cái cuối ko phẩy, chú ý phẩy cái trên nếu thêm cái mới
+
+bước 3
+*TAG_LIST thêm mục
+// --- THÊM CHO ĐẠO CỤ ---
+    "KÍ_TỰ_TẮT_HIEN_DAI": ["TÊN THẺ CON", "TÊN THẺ CON"],
+    "KÍ_TỰ_TẮT_CO_XUA": ["TÊN THẺ CON", "TÊN THẺ CON"],
+
+bước 4 
+const TAG_INFO
+
+// --- DỮ LIỆU (TÊN CỦA MỤC HIỆN ĐẠI) ---
+    "TÊN CÁC THẺ CON": { title: "TÊN TRANG MÀU TRẮNG <span>TÊN TRANG MÀU VÀNG</span>", link: "link-toan-bộ" },
+    "TÊN CÁC THẺ CON": { title: "TÊN TRANG MÀU TRẮNG <span>TÊN TRANG MÀU VÀNG</span>", link: "link-toan-bộ" },
+    // --- DỮ LIỆU (TÊN CỦA MỤC CỔ XƯA) ---
+    "TÊN CÁC THẺ CON": { title: "TÊN TRANG MÀU TRẮNG <span>TRANG MÀU VÀNG</span>", link: "link-toan-bộ" },
+    "TÊN CÁC THẺ CON": { title: "TÊN TRANG MÀU TRẮNG <span>TRANG MÀU VÀNG</span>", link: "link-toan-bộ" },
+
+BƯỚC 5: Sửa file script.js (Để nút VƯA THÊM sáng lên khi bấm)
+
+// --- THÊM DÒNG NÀY ---
+copy ở trên nhớ dổi tên
+    178
+
+
+
+CÁCh biến link gg drive thành link tải trực tiếp
+https://drive.google.com/uc?export=download&id=THAY BẰNG ID LINK FILE GG DRIVE

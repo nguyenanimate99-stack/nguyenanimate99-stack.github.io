@@ -1,0 +1,248 @@
+/* --- style.css (Dán đè lên file cũ) --- */
+
+:root {
+    --bg-color: #050505;
+    --nav-bg: #0f1115;
+    --nav-active-bg: #000000;
+    --text-color: #ffffff;       
+    --accent-color: #ffcc00;     
+    --gray-text: #a1a1aa;        
+    --card-bg: #111111;
+    --card-border: rgba(255, 255, 255, 0.05);
+    --shadow: rgba(0,0,0,0.8);
+    --download-btn-bg: #3f424b;
+    --download-btn-text: #ffffff;
+    --hover-bg: rgba(255,255,255,0.05);
+}
+
+body.light-mode {
+    --bg-color: #ffffff;          
+    --nav-bg: #ffffff;            
+    --nav-active-bg: #eeeeee;     
+    --text-color: #000000;        
+    --accent-color: #fc9905;      
+    --gray-text: #000000;         
+    --card-bg: #868585;           
+    --card-border: #000000;       
+    --shadow: rgba(0,0,0,0.15);   
+    --download-btn-bg: #000000;   
+    --download-btn-text: #ffffff; 
+    --hover-bg: rgba(0,0,0,0.05); 
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; outline: none; }
+html { overflow-y: scroll; }
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    display: flex; flex-direction: column; align-items: center; 
+    min-height: 100vh; padding-bottom: 50px; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+nav { 
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; 
+    width: auto; min-width: 900px; max-width: 95%; height: 70px; padding: 0 20px;
+    background-color: var(--nav-bg); border-radius: 50px; 
+    display: flex; align-items: center; justify-content: space-between; 
+    box-shadow: 0 10px 40px var(--shadow); 
+    border: 1px solid var(--card-border); 
+    backdrop-filter: blur(10px); 
+    transition: 0.3s; 
+}
+.nav-left { display: flex; align-items: center; margin-right: 15px; }
+.logo-circle { 
+    width: 40px; height: 40px; 
+    background-color: var(--text-color); 
+    color: var(--bg-color);              
+    border: 1px solid var(--card-border);
+    border-radius: 50%; display: flex; justify-content: center; align-items: center; 
+    font-weight: 900; font-size: 20px; 
+    cursor: pointer; user-select: none; transition: 0.3s; flex-shrink: 0;
+}
+.logo-circle:hover { transform: scale(1.1); }
+.nav-container { 
+    display: flex; align-items: center; gap: 5px; 
+    flex: 1; overflow-x: auto; white-space: nowrap; padding: 0 10px; 
+    scrollbar-width: none; -ms-overflow-style: none;
+}
+.nav-container::-webkit-scrollbar { display: none; }
+.nav-item { 
+    cursor: pointer; transition: 0.3s; padding: 10px 15px; border-radius: 30px; 
+    font-size: 13px; font-weight: 600; 
+    color: var(--gray-text); 
+    text-decoration: none; display: flex; align-items: center; gap: 5px; 
+    white-space: nowrap; flex-shrink: 0;
+}
+.nav-item:hover { color: var(--text-color); background-color: var(--hover-bg); }
+.nav-item.active { background-color: var(--nav-active-bg); color: var(--text-color); font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.arrow-down { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 4px solid currentColor; opacity: 0.7; margin-top: 2px; }
+.nav-right { display: flex; align-items: center; margin-left: 15px; flex-shrink: 0; }
+.user-icon { width: 40px; height: 40px; border: 1px solid var(--gray-text); border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; overflow: hidden; }
+.user-icon:hover { border-color: var(--text-color); background-color: var(--hover-bg); }
+.user-icon svg { width: 20px; height: 20px; fill: var(--text-color); }
+
+.container { width: 98%; max-width: none; padding: 0 10px; display: flex; flex-direction: column; margin-top: 130px; }
+.header-section { position: relative; text-align: center; margin-bottom: 40px; }
+.back-btn { 
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%); 
+    border: 1px solid var(--gray-text); padding: 8px 16px; border-radius: 4px; 
+    font-size: 12px; color: var(--gray-text); text-decoration: none; transition: 0.3s; font-weight: 500;
+}
+.back-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+.main-title { font-size: 40px; font-weight: 900; letter-spacing: 2px; color: var(--text-color); }
+.main-title span { color: var(--accent-color); text-shadow: 0 0 20px rgba(255, 204, 0, 0.3); }
+
+.category-tabs { display: flex; justify-content: flex-start; gap: 40px; margin-bottom: 20px; border-bottom: 2px solid var(--card-border); padding-bottom: 10px; width: 100%; }
+.tab-btn { 
+    background: none; border: none; 
+    color: var(--gray-text); 
+    font-size: 18px; font-weight: 800; text-transform: uppercase; 
+    cursor: pointer; position: relative; transition: 0.3s; padding: 5px 0; 
+}
+.tab-btn:hover, .tab-btn.active { color: var(--text-color); }
+.tab-btn.active::after { content: ''; position: absolute; bottom: -12px; left: 0; width: 100%; height: 4px; background-color: var(--accent-color); box-shadow: 0 -2px 15px rgba(255, 204, 0, 0.8); border-radius: 2px 2px 0 0; }
+
+.controls-container { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 30px; }
+.filters { display: flex; gap: 12px; flex-wrap: wrap; }
+.filter-pill { 
+    padding: 8px 20px; border-radius: 100px; 
+    background-color: transparent; 
+    color: var(--gray-text); 
+    font-size: 13px; font-weight: 500; 
+    cursor: pointer; transition: 0.3s; 
+    border: 1px solid var(--card-border); 
+}
+.filter-pill:hover { border-color: var(--accent-color); color: var(--text-color); transform: translateY(-2px); background-color: var(--hover-bg); }
+.filter-pill.active { background-color: var(--accent-color); color: #000; font-weight: 700; border-color: var(--accent-color); box-shadow: 0 0 15px rgba(255, 204, 0, 0.4); }
+
+.download-btn { 
+    background-color: var(--download-btn-bg); 
+    color: var(--download-btn-text); 
+    padding: 12px 28px; border-radius: 100px; font-weight: bold; font-size: 13px; 
+    cursor: pointer; transition: 0.3s; border: none; text-decoration: none; display: inline-block; 
+}
+.download-btn:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 
+                0 0 30px rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    transition: box-shadow 0.3s ease;
+}
+
+.grid { 
+    display: grid; 
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 25px; 
+    width: 100%; margin-bottom: 50px; 
+    min-height: 800px; 
+}
+.card { 
+    background: var(--card-bg); 
+    border-radius: 12px; aspect-ratio: 16/9; position: relative; 
+    border: 1px solid var(--card-border); 
+    cursor: pointer; opacity: 0; 
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
+    transition: all 0.4s; 
+    box-shadow: 0 4px 10px var(--shadow); 
+    overflow: hidden; 
+}
+.card-label { 
+    position: absolute; top: 15px; left: 15px; 
+    font-size: 12px; color: var(--gray-text); font-weight: 700; z-index: 2; transition: color 0.3s; 
+}
+.card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--accent-color); box-shadow: 0 20px 30px rgba(0,0,0,0.1), 0 0 15px rgba(255, 204, 0, 0.15); }
+.card:hover .card-label { color: var(--accent-color); text-shadow: 0 0 5px rgba(255, 204, 0, 0.5); }
+@keyframes popIn { from { opacity: 0; transform: scale(0.8) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+.pagination { display: flex; gap: 10px; align-self: center; }
+.page-btn { 
+    width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; 
+    background: var(--card-bg); border-radius: 8px; cursor: pointer; transition: 0.3s; 
+    border: 1px solid var(--card-border); color: var(--gray-text); font-weight: 500;
+}
+.page-btn:hover, .page-btn.active { background: var(--accent-color); color: black; font-weight: bold; border-color: var(--accent-color); box-shadow: 0 0 10px rgba(255, 204, 0, 0.4); transform: translateY(-2px); }
+
+@media (max-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } nav { min-width: auto; width: 95%; } }
+@media (max-width: 900px) { 
+    .grid { grid-template-columns: repeat(3, 1fr); } 
+    nav { height: auto; flex-direction: column; padding: 15px; border-radius: 20px; } 
+    .nav-container { justify-content: flex-start; width: 100%; overflow-x: auto; margin: 10px 0; } 
+    .container { margin-top: 170px; } 
+}
+@media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } .controls-container { flex-direction: column; align-items: flex-start; gap: 15px; } .download-btn { width: 100%; text-align:center; } }
+
+/* --- PHẦN MỚI THÊM VÀO --- */
+
+/* 1. TRANG CHỦ (Home Section) */
+.home-container {
+    height: 100vh; display: flex; flex-direction: column; 
+    justify-content: center; align-items: center; text-align: center;
+    animation: fadeIn 0.8s ease;
+}
+.home-title { font-size: 60px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: var(--text-color); }
+.home-title span { color: var(--accent-color); text-shadow: 0 0 30px rgba(255, 204, 0, 0.3); }
+.home-subtitle { font-size: 18px; color: var(--gray-text); margin-bottom: 40px; }
+
+.explore-btn {
+    padding: 15px 50px; font-size: 18px; font-weight: bold;
+    background: var(--text-color); color: var(--bg-color);
+    border: none; border-radius: 50px; cursor: pointer; transition: 0.3s;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+.explore-btn:hover { 
+    transform: scale(1.1); background: var(--accent-color); color: #000; 
+    box-shadow: 0 0 30px var(--accent-color);
+}
+
+/* 2. CÔNG CỤ ẨN HIỆN */
+.hidden { display: none !important; }
+
+/* 3. POPUP ĐĂNG NHẬP */
+.login-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    backdrop-filter: blur(8px);
+}
+.login-box {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    padding: 40px; border-radius: 20px; text-align: center;
+    width: 350px; box-shadow: 0 0 50px rgba(0,0,0,0.5);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.login-box h2 { margin-bottom: 10px; color: var(--text-color); }
+.login-box p { color: var(--gray-text); margin-bottom: 30px; font-size: 14px; }
+.google-btn {
+    width: 100%; padding: 12px; border: none; border-radius: 8px;
+    background: #fff; color: #333; font-weight: bold; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    transition: 0.3s; font-size: 14px;
+}
+.google-btn:hover { background: #f1f1f1; transform: translateY(-2px); }
+.close-login {
+    background: transparent; border: none; color: var(--gray-text);
+    margin-top: 15px; cursor: pointer; text-decoration: underline; font-size: 12px;
+}
+.user-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+/* --- style.css (Thêm xuống cuối) --- */
+
+/* Định dạng cho ảnh GIF nằm đè lên ảnh tĩnh */
+.card-img-gif {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 1;        /* Nằm trên ảnh tĩnh */
+    opacity: 0;        /* Mặc định ẩn đi */
+    transition: opacity 0.3s ease; /* Hiện từ từ cho mượt */
+}
+
+/* Khi lia chuột vào Card -> Hiện GIF */
+.card:hover .card-img-gif {
+    opacity: 1;
+}
+
+/* Ẩn ảnh tĩnh khi GIF hiện (để đỡ bị chồng màu) */
+.card:hover .card-img-static {
+    opacity: 0;
+}
