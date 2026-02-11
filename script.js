@@ -24,7 +24,6 @@ function goHome() {
 
 function switchCategory(categoryName) {
     // BẢO MẬT: Kiểm tra đăng nhập ngay tại đây!
-    // Nếu chưa đăng nhập -> Hiện popup login và DỪNG LẠI KHÔNG CHO VÀO
     if (!CONFIG.currentUser) {
         toggleLogin(); // Hiện bảng đăng nhập
         return;        // Dừng code lại, không cho chuyển trang
@@ -50,12 +49,12 @@ function switchCategory(categoryName) {
     }
 }
 
-// --- 2. LOGIC ĐĂNG NHẬP (GIẢ LẬP) ---
+// --- 2. LOGIC ĐĂNG NHẬP THẬT (REAL FIREBASE) ---
 
 function toggleLogin() {
     if (CONFIG.currentUser) {
         const logout = confirm("Bạn có muốn đăng xuất?");
-        if (logout) handleLogout();
+        if (logout) handleLogout(false);
     } else {
         document.getElementById('login-overlay').classList.remove('hidden');
     }
@@ -65,62 +64,85 @@ function closeLoginPopup() {
     document.getElementById('login-overlay').classList.add('hidden');
 }
 
-function handleGoogleLogin() {
-    /* GIẢ LẬP ĐĂNG NHẬP (Simulation Mode)
-       - Khi nhấn nút, nó tự coi như đã đăng nhập thành công.
-    */
-    const fakeUser = {
-        displayName: "Người Dùng",
-        email: "user@gmail.com", 
-        photoURL: "https://lh3.googleusercontent.com/a/default-user" // Avatar mặc định
-    };
+// Hàm gọi cửa sổ đăng nhập Google thật
+async function handleGoogleLogin() {
+    // Kiểm tra kết nối
+    if (!window.authServices) {
+        alert("Đang kết nối đến Google... Vui lòng đợi 1 giây rồi thử lại!");
+        return;
+    }
 
-    onLoginSuccess(fakeUser);
+    const { auth, provider, signInWithPopup } = window.authServices;
+
+    try {
+        // Mở popup Google
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        
+        // Đăng nhập thành công -> Chạy hàm xử lý giao diện
+        onLoginSuccess(user);
+        
+    } catch (error) {
+        console.error("Lỗi đăng nhập:", error);
+        alert("Đăng nhập thất bại: " + error.message);
+    }
 }
 
+// Hàm xử lý giao diện khi đã có User
 function onLoginSuccess(user) {
     CONFIG.currentUser = user;
     closeLoginPopup();
 
-    // Đổi icon user thành avatar
+    // Đổi icon user thành avatar thật
     const userDiv = document.getElementById('user-display');
-    userDiv.innerHTML = `<img src="${user.photoURL}" class="user-avatar" title="${user.displayName}">`;
+    // Lấy ảnh đại diện từ Google
+    const avatarUrl = user.photoURL || "https://ui-avatars.com/api/?name=" + user.displayName;
+    
+    userDiv.innerHTML = `<img src="${avatarUrl}" class="user-avatar" title="${user.displayName}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
     userDiv.style.border = "2px solid var(--accent-color)";
 
-    updateDownloadButton(); // Cập nhật nút tải cho sáng lên
+    updateDownloadButton(); // Mở khóa nút tải
 
-    // Tự động vào luôn mục Nhân Vật cho tiện
-    alert("Đăng nhập thành công! Chào mừng " + user.displayName);
-    switchCategory("NHAN_VAT");
+    // Chỉ hiện thông báo chào mừng nếu đang ở màn hình Home
+    const homeSection = document.getElementById('home-section');
+    if (homeSection && !homeSection.classList.contains('hidden')) {
+        alert("Xin chào " + user.displayName + "! Bạn đã có thể tải ảnh.");
+        switchCategory("NHAN_VAT");
+    }
 }
 
-function handleLogout() {
+function handleLogout(isSilent = false) {
+    // Gọi lệnh đăng xuất thật của Google
+    if (window.authServices) {
+        const { auth, signOut } = window.authServices;
+        signOut(auth).catch((error) => console.error("Lỗi đăng xuất:", error));
+    }
+
     CONFIG.currentUser = null;
     
-    // Reset icon user
+    // Reset icon user về mặc định
     const userDiv = document.getElementById('user-display');
     userDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
     userDiv.style.border = "1px solid var(--gray-text)";
 
     updateDownloadButton();
     
-    // Đăng xuất xong thì ĐÁ VỀ TRANG CHỦ ngay
-    goHome();
+    // Nếu người dùng tự bấm thoát thì đá về trang chủ
+    if (!isSilent) {
+        goHome();
+    }
 }
 
-// --- 3. LOGIC TẢI XUỐNG (ĐÃ CẬP NHẬT: TẢI TỪNG ẢNH) ---
+// --- 3. LOGIC TẢI XUỐNG ---
 
 function updateDownloadButton() {
     const btn = document.getElementById('download-btn');
     const user = CONFIG.currentUser;
 
-    // Chỉ cần kiểm tra: Đã đăng nhập hay chưa?
     if (!user) {
-        // Chưa đăng nhập
         btn.innerHTML = `<i class="fas fa-lock"></i> ĐĂNG NHẬP ĐỂ TẢI`;
         btn.style.opacity = "0.7";
     } else {
-        // Đã đăng nhập
         btn.innerHTML = `TẢI TẤT CẢ`;
         btn.style.opacity = "1";
     }
@@ -129,13 +151,11 @@ function updateDownloadButton() {
 function handleDownload() {
     const user = CONFIG.currentUser;
     
-    // 1. Chặn nếu chưa đăng nhập
     if (!user) {
         toggleLogin();
         return;
     }
 
-    // 2. Mở link chung (nếu có)
     if (CONFIG.currentLink && CONFIG.currentLink !== "#") {
         window.open(CONFIG.currentLink, '_blank');
     } else {
@@ -143,24 +163,19 @@ function handleDownload() {
     }
 }
 
-// --- HÀM XỬ LÝ CLICK VÀO ẢNH (MỚI) ---
+// --- HÀM XỬ LÝ CLICK VÀO ẢNH ---
 function handleCardClick(item) {
-    // Bước 1: Kiểm tra đăng nhập
     if (!CONFIG.currentUser) {
-        toggleLogin(); // Chưa đăng nhập thì hiện bảng Login
+        toggleLogin(); 
         return;
     }
 
-    // Bước 2: Kiểm tra xem ảnh có link drive không
     if (!item.driveLink || item.driveLink === "") {
         alert("File này chưa được cập nhật link tải. Vui lòng thử ảnh khác!");
         return;
     }
 
-    // Bước 3: Chuyển đổi link và Tải
     const directLink = convertToDirectLink(item.driveLink);
-    
-    // Mở tab mới để tải
     window.open(directLink, '_blank');
 }
 
@@ -169,7 +184,6 @@ function handleCardClick(item) {
 function updateActiveMenu() {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     
-    // Logic làm sáng nút menu
     const menuId = {
         "NHAN_VAT": 'btn-nhanvat',
         "KHUNG_CANH": 'btn-khungcanh',
@@ -247,8 +261,6 @@ function renderFilters(currentTab, currentTag) {
     });
 }
 
-/* --- Thay thế hàm renderGrid trong script.js --- */
-
 function renderGrid(currentTab, currentTag, currentPage) {
     const gridContainer = document.getElementById('grid');
     gridContainer.innerHTML = '';
@@ -269,23 +281,17 @@ function renderGrid(currentTab, currentTag, currentPage) {
             card.className = 'card';
             card.style.animationDelay = `${index * 0.05}s`;
             
-            // Click để tải
             card.onclick = () => { handleCardClick(item); };
 
-            // --- ĐOẠN LOGIC MỚI ĐỂ XỬ LÝ ẢNH GIF ---
             let imageHTML = ``;
-            
-            // Kiểm tra: Nếu có thuộc tính 'gif' và nó không rỗng
             if (item.gif && item.gif !== "") {
                 imageHTML = `
                     <img src="${item.img}" class="card-img-static" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
-                    
                     <img src="${item.gif}" class="card-img-gif" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
                 `;
             } else {
-                // Nếu không có GIF, chỉ hiện ảnh tĩnh bình thường
                 imageHTML = `
-                    <img src="${item.img}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
+                    <img src="${item.img}" class="card-img-static" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
                 `;
             }
 
