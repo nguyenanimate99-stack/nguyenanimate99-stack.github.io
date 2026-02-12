@@ -1,4 +1,4 @@
-/* --- style.css (Dán đè lên file cũ) --- */
+/* --- style.css --- */
 
 :root {
     --bg-color: #050505;
@@ -171,8 +171,6 @@ nav {
 }
 @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } .controls-container { flex-direction: column; align-items: flex-start; gap: 15px; } .download-btn { width: 100%; text-align:center; } }
 
-/* --- PHẦN MỚI THÊM VÀO --- */
-
 /* 1. TRANG CHỦ (Home Section) */
 .home-container {
     height: 100vh; display: flex; flex-direction: column; 
@@ -224,25 +222,166 @@ nav {
     margin-top: 15px; cursor: pointer; text-decoration: underline; font-size: 12px;
 }
 .user-avatar { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
-/* --- style.css (Thêm xuống cuối) --- */
 
-/* Định dạng cho ảnh GIF nằm đè lên ảnh tĩnh */
+/* ĐỊNH DẠNG GIF */
 .card-img-gif {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 1;        /* Nằm trên ảnh tĩnh */
-    opacity: 0;        /* Mặc định ẩn đi */
-    transition: opacity 0.3s ease; /* Hiện từ từ cho mượt */
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+    z-index: 1; opacity: 0; transition: opacity 0.3s ease;
+}
+.card:hover .card-img-gif { opacity: 1; }
+.card:hover .card-img-static { opacity: 0; }
+
+/* --- PHẦN MỚI THÊM VÀO: TOAST NOTIFICATION & CONFIRM BOX --- */
+
+/* 1. TOAST */
+#toast-container {
+    position: fixed; top: 20px; right: 20px; z-index: 10000;
+    display: flex; flex-direction: column; gap: 10px;
+}
+.toast {
+    background: rgba(20, 20, 20, 0.95);
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    border-left: 5px solid var(--accent-color);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    display: flex; align-items: center; gap: 12px;
+    min-width: 300px;
+    animation: slideInRight 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+.toast i { font-size: 18px; }
+.toast.success { border-color: #4caf50; } 
+.toast.success i { color: #4caf50; }
+.toast.error { border-color: #ff5252; }   
+.toast.error i { color: #ff5252; }
+
+@keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; pointer-events: none; } }
+
+/* 2. CUSTOM CONFIRM */
+.confirm-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); z-index: 10001;
+    display: flex; justify-content: center; align-items: center;
+    backdrop-filter: blur(5px);
+}
+.confirm-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 30px; border-radius: 15px;
+    width: 350px; text-align: center;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.confirm-box h3 { color: var(--accent-color); margin-bottom: 10px; font-size: 22px; text-transform: uppercase; }
+.confirm-box p { color: var(--text-color); margin-bottom: 25px; }
+.confirm-actions { display: flex; justify-content: center; gap: 15px; }
+.confirm-actions button {
+    padding: 10px 20px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+.btn-cancel { background: #333; color: #fff; }
+.btn-cancel:hover { background: #555; }
+.btn-ok { background: var(--accent-color); color: #000; }
+.btn-ok:hover { box-shadow: 0 0 15px var(--accent-color); transform: translateY(-2px); }
+/* --- MOBILE RESPONSIVE (Dán vào cuối file style.css) --- */
+
+@media (max-width: 768px) {
+    /* 1. THANH MENU (NAV) */
+    nav {
+        top: 10px;
+        width: 95%;        /* Chiếm 95% màn hình */
+        min-width: auto;   /* Bỏ chiều rộng cố định của máy tính */
+        height: 60px;
+        padding: 0 10px;
+        border-radius: 15px; /* Bo góc ít hơn cho gọn */
+    }
+    
+    .nav-container {
+        margin: 0 10px;
+        /* Cho phép lướt ngang menu mượt mà */
+        overflow-x: auto; 
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Thu nhỏ logo và avatar một chút */
+    .logo-circle { width: 35px; height: 35px; font-size: 16px; }
+    .user-icon { width: 35px; height: 35px; }
+    .user-icon svg { width: 18px; height: 18px; }
+
+    /* 2. TRANG CHỦ (HOME SECTION) */
+    .home-title { 
+        font-size: 32px; /* Chữ nhỏ lại cho vừa đt */
+    }
+    .home-subtitle {
+        font-size: 14px;
+        padding: 0 20px; /* Cách lề để không sát mép */
+    }
+    .explore-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+    }
+
+    /* 3. PHẦN TIÊU ĐỀ TRANG CON */
+    .container {
+        margin-top: 100px; /* Đẩy lên cao hơn chút vì nav nhỏ lại */
+    }
+    .main-title {
+        font-size: 28px; /* Tên mục nhỏ lại */
+    }
+    .category-tabs {
+        gap: 15px; /* Các tab gần nhau hơn */
+        overflow-x: auto; /* Nếu nhiều tab quá thì lướt ngang */
+        justify-content: flex-start; /* Căn trái để lướt */
+        padding-bottom: 5px;
+    }
+    .tab-btn { font-size: 14px; white-space: nowrap; }
+
+    /* 4. BỘ LỌC VÀ NÚT TẢI */
+    .controls-container {
+        flex-direction: column; /* Xếp dọc: Bộ lọc trên, nút tải dưới */
+        align-items: stretch;   /* Kéo dãn ra */
+        gap: 15px;
+    }
+    .filters {
+        justify-content: center; /* Bộ lọc căn giữa */
+    }
+    .filter-pill {
+        padding: 6px 15px;
+        font-size: 12px;
+    }
+    .download-btn {
+        width: 100%;       /* Nút tải to full chiều ngang bấm cho dễ */
+        text-align: center;
+        padding: 15px;
+    }
+
+    /* 5. LƯỚI ẢNH (GRID) */
+    .grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 cột ảnh */
+        gap: 10px; /* Khoảng cách giữa các ảnh nhỏ lại */
+    }
+    .card-label {
+        font-size: 10px; /* Chữ trên ảnh nhỏ lại */
+        left: 10px; top: 10px;
+    }
+
+    /* 6. POPUP (Đăng nhập / Xác nhận / Thông báo) */
+    .login-box, .confirm-box {
+        width: 90%;       /* Tự co giãn theo màn hình */
+        max-width: 350px;
+        padding: 25px;    /* Giảm padding bên trong */
+    }
+    .toast {
+        min-width: auto;
+        width: 90%;       /* Thông báo bay ra không bị tràn */
+        right: 5%; left: 5%; /* Căn giữa */
+        font-size: 13px;
+    }
 }
 
-/* Khi lia chuột vào Card -> Hiện GIF */
-.card:hover .card-img-gif {
-    opacity: 1;
-}
-
-/* Ẩn ảnh tĩnh khi GIF hiện (để đỡ bị chồng màu) */
-.card:hover .card-img-static {
-    opacity: 0;
+/* Màn hình siêu nhỏ (iPhone 5/SE cũ) */
+@media (max-width: 350px) {
+    .home-title { font-size: 24px; }
+    .grid { grid-template-columns: 1fr; } /* 1 cột cho dễ nhìn */
 }
