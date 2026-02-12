@@ -162,6 +162,7 @@ nav {
 }
 .page-btn:hover, .page-btn.active { background: var(--accent-color); color: black; font-weight: bold; border-color: var(--accent-color); box-shadow: 0 0 10px rgba(255, 204, 0, 0.4); transform: translateY(-2px); }
 
+/* MEDIA QUERIES GỐC (GIỮ NGUYÊN) */
 @media (max-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } nav { min-width: auto; width: 95%; } }
 @media (max-width: 900px) { 
     .grid { grid-template-columns: repeat(3, 1fr); } 
@@ -231,9 +232,7 @@ nav {
 .card:hover .card-img-gif { opacity: 1; }
 .card:hover .card-img-static { opacity: 0; }
 
-/* --- PHẦN MỚI THÊM VÀO: TOAST NOTIFICATION & CONFIRM BOX --- */
-
-/* 1. TOAST */
+/* --- TOAST & CONFIRM BOX --- */
 #toast-container {
     position: fixed; top: 20px; right: 20px; z-index: 10000;
     display: flex; flex-direction: column; gap: 10px;
@@ -259,7 +258,6 @@ nav {
 @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; pointer-events: none; } }
 
-/* 2. CUSTOM CONFIRM */
 .confirm-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.8); z-index: 10001;
@@ -284,104 +282,77 @@ nav {
 .btn-cancel:hover { background: #555; }
 .btn-ok { background: var(--accent-color); color: #000; }
 .btn-ok:hover { box-shadow: 0 0 15px var(--accent-color); transform: translateY(-2px); }
-/* --- MOBILE RESPONSIVE (Dán vào cuối file style.css) --- */
 
-@media (max-width: 768px) {
-    /* 1. THANH MENU (NAV) */
+/* --- MOBILE OPTIMIZATION (ĐÃ CHỈNH MÀU CHUẨN CODE GỐC) --- */
+
+@media (max-width: 1024px) {
+    /* Full màn hình cho nav trên tablet/mobile */
     nav {
-        top: 10px;
-        width: 95%;        /* Chiếm 95% màn hình */
-        min-width: auto;   /* Bỏ chiều rộng cố định của máy tính */
-        height: 60px;
-        padding: 0 10px;
-        border-radius: 15px; /* Bo góc ít hơn cho gọn */
+        min-width: unset; width: 100%; max-width: 100%;
+        top: 0; left: 0; transform: none;
+        border-radius: 0; border: none;
+        padding: 10px 15px; height: auto; flex-wrap: wrap;
+        background-color: var(--nav-bg);
+        box-shadow: 0 4px 10px var(--shadow);
+        backdrop-filter: blur(10px);
     }
-    
-    .nav-container {
-        margin: 0 10px;
-        /* Cho phép lướt ngang menu mượt mà */
-        overflow-x: auto; 
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* Thu nhỏ logo và avatar một chút */
-    .logo-circle { width: 35px; height: 35px; font-size: 16px; }
-    .user-icon { width: 35px; height: 35px; }
-    .user-icon svg { width: 18px; height: 18px; }
-
-    /* 2. TRANG CHỦ (HOME SECTION) */
-    .home-title { 
-        font-size: 32px; /* Chữ nhỏ lại cho vừa đt */
-    }
-    .home-subtitle {
-        font-size: 14px;
-        padding: 0 20px; /* Cách lề để không sát mép */
-    }
-    .explore-btn {
-        padding: 12px 30px;
-        font-size: 14px;
-    }
-
-    /* 3. PHẦN TIÊU ĐỀ TRANG CON */
-    .container {
-        margin-top: 100px; /* Đẩy lên cao hơn chút vì nav nhỏ lại */
-    }
-    .main-title {
-        font-size: 28px; /* Tên mục nhỏ lại */
-    }
-    .category-tabs {
-        gap: 15px; /* Các tab gần nhau hơn */
-        overflow-x: auto; /* Nếu nhiều tab quá thì lướt ngang */
-        justify-content: flex-start; /* Căn trái để lướt */
-        padding-bottom: 5px;
-    }
-    .tab-btn { font-size: 14px; white-space: nowrap; }
-
-    /* 4. BỘ LỌC VÀ NÚT TẢI */
-    .controls-container {
-        flex-direction: column; /* Xếp dọc: Bộ lọc trên, nút tải dưới */
-        align-items: stretch;   /* Kéo dãn ra */
-        gap: 15px;
-    }
-    .filters {
-        justify-content: center; /* Bộ lọc căn giữa */
-    }
-    .filter-pill {
-        padding: 6px 15px;
-        font-size: 12px;
-    }
-    .download-btn {
-        width: 100%;       /* Nút tải to full chiều ngang bấm cho dễ */
-        text-align: center;
-        padding: 15px;
-    }
-
-    /* 5. LƯỚI ẢNH (GRID) */
-    .grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 cột ảnh */
-        gap: 10px; /* Khoảng cách giữa các ảnh nhỏ lại */
-    }
-    .card-label {
-        font-size: 10px; /* Chữ trên ảnh nhỏ lại */
-        left: 10px; top: 10px;
-    }
-
-    /* 6. POPUP (Đăng nhập / Xác nhận / Thông báo) */
-    .login-box, .confirm-box {
-        width: 90%;       /* Tự co giãn theo màn hình */
-        max-width: 350px;
-        padding: 25px;    /* Giảm padding bên trong */
-    }
-    .toast {
-        min-width: auto;
-        width: 90%;       /* Thông báo bay ra không bị tràn */
-        right: 5%; left: 5%; /* Căn giữa */
-        font-size: 13px;
-    }
+    .container { margin-top: 140px; padding: 0 10px; }
 }
 
-/* Màn hình siêu nhỏ (iPhone 5/SE cũ) */
-@media (max-width: 350px) {
-    .home-title { font-size: 24px; }
-    .grid { grid-template-columns: 1fr; } /* 1 cột cho dễ nhìn */
+@media (max-width: 768px) {
+    /* Layout Mobile */
+    nav {
+        display: grid;
+        grid-template-columns: auto 1fr auto; 
+        align-items: center; gap: 10px; padding: 10px;
+    }
+    .nav-left, .nav-right { margin: 0; }
+    .nav-container {
+        grid-column: 1 / -1; order: 3;
+        width: 100%; margin-top: 5px; padding-bottom: 5px;
+        justify-content: flex-start; 
+    }
+    
+    /* --- SỬA MÀU MENU CHUẨN PC CHO MOBILE --- */
+    .nav-item {
+        font-size: 12px; padding: 8px 12px; border-radius: 20px;
+        background: transparent; /* Nền trong suốt khi chưa chọn */
+        color: var(--gray-text);
+        border: 1px solid transparent;
+    }
+    .nav-item.active {
+        /* BẮT BUỘC dùng màu nền active của PC (Màu đen ở darkmode) */
+        background-color: var(--nav-active-bg) !important; 
+        color: var(--text-color) !important;
+        font-weight: 700;
+        border: 1px solid var(--card-border);
+    }
+
+    /* Grid 2 cột */
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .card { border-radius: 8px; }
+
+    /* Sửa bóng chữ dùng biến màu gốc */
+    .card-label {
+        font-size: 12px; top: 10px; left: 10px;
+        background: none; padding: 0;
+        max-width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        text-shadow: 0 2px 4px var(--shadow), 0 0 10px var(--bg-color); 
+    }
+
+    /* Scroll bar ẩn */
+    .category-tabs { gap: 15px; overflow-x: auto; justify-content: flex-start; padding-bottom: 5px; margin-bottom: 15px; }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    .tab-btn { font-size: 14px; flex-shrink: 0; }
+
+    .controls-container { flex-direction: column; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+    .filters { width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
+    .filters::-webkit-scrollbar { display: none; }
+    .filter-pill { flex-shrink: 0; padding: 6px 16px; font-size: 12px; }
+
+    .download-btn { width: 100%; text-align: center; padding: 14px; font-size: 14px; }
+    .login-box, .confirm-box { width: 90%; padding: 25px 20px; }
+    .main-title { font-size: 28px; }
+    .header-section { margin-bottom: 20px; }
+    .back-btn { position: relative; top: auto; left: auto; transform: none; display: inline-block; margin-bottom: 10px; padding: 5px 10px; }
 }
