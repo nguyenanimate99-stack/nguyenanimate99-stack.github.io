@@ -9,6 +9,18 @@
 </head>
 <body>
 
+    <div id="toast-container"></div>
+
+    <div id="custom-confirm" class="confirm-overlay hidden">
+        <div class="confirm-box">
+            <h3>Xác nhận</h3>
+            <p id="confirm-message">Bạn có chắc chắn muốn thực hiện?</p>
+            <div class="confirm-actions">
+                <button class="btn-cancel" onclick="closeConfirm()">Hủy bỏ</button>
+                <button class="btn-ok" id="btn-confirm-yes">Đồng ý</button>
+            </div>
+        </div>
+    </div>
     <div id="login-overlay" class="login-overlay hidden">
         <div class="login-box">
             <h2>Đăng Nhập</h2>
@@ -59,7 +71,7 @@
 
     <div id="home-section" class="home-container">
         <h1 class="home-title">KHO TÀI NGUYÊN <br> <span>SÁNG TẠO</span></h1>
-        <p class="home-subtitle">Hàng ngàn tài nguyên miễn phí: Nhân vật, Khung cảnh, Hiệu ứng...</p>
+        <p class="home-subtitle">Hàng ngàn tài nguyên: Nhân vật, Khung cảnh, Hiệu ứng...</p>
         <button class="explore-btn" onclick="switchCategory('NHAN_VAT')">KHÁM PHÁ NGAY</button>
     </div>
 
@@ -86,38 +98,33 @@
     <script src="images.js"></script>
 
     <script type="module">
-        // 1. Lấy thư viện
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // 2. Điền mã Config MỚI NHẤT của bạn (từ ảnh image_a986ff.png)
-        const firebaseConfig = {
-            apiKey: "AIzaSyA72xpBaR11aAztYoP--xQ1-19Rt3mRWF8",
-            authDomain: "nguyenanimate-c7bd4.firebaseapp.com",
-            projectId: "nguyenanimate-c7bd4",
-            storageBucket: "nguyenanimate-c7bd4.firebasestorage.app",
-            messagingSenderId: "1018956225311",
-            appId: "1:1018956225311:web:885a2c60a5e7ef201d6e2a"
+        // Thông tin từ ảnh bạn gửi
+       const firebaseConfig = {
+            apiKey: "AIzaSyC-PjBKsYMgFg9CMP87t_02dZ8pVpo4Uus",
+            authDomain: "nguyen-animate-web.firebaseapp.com",
+            projectId: "nguyen-animate-web",
+            storageBucket: "nguyen-animate-web.firebasestorage.app",
+            messagingSenderId: "133159757958",
+            appId: "1:133159757958:web:98ba5a7173c92d319c8907",
+            measurementId: "G-B6V37BE0J1"
         };
-
-        // 3. Khởi động
+        // Khởi tạo Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
 
-        // 4. Đưa ra ngoài để script.js dùng được
-        window.authServices = { auth, provider, signInWithPopup, signOut };
-
-        // 5. Giữ đăng nhập khi F5
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                console.log("Đã đăng nhập:", user.displayName);
-                if (window.onLoginSuccess) window.onLoginSuccess(user);
-            } else {
-                console.log("Chưa đăng nhập");
-                if (window.handleLogout) window.handleLogout(true); 
-            }
-        });
+        // Xuất ra window để script.js dùng được
+        window.firebaseLibs = { 
+            auth, 
+            signInWithPopup, 
+            GoogleAuthProvider, 
+            signOut,
+            onAuthStateChanged 
+        };
+        
+        console.log("Firebase đã kết nối!");
     </script>
 
     <script src="script.js"></script>
