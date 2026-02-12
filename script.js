@@ -10,38 +10,75 @@ const CONFIG = {
     currentLink: ""     
 };
 
+// --- 0. CÁC HÀM TIỆN ÍCH GIAO DIỆN MỚI (TOAST & CONFIRM) ---
+
+// Hàm hiện thông báo đẹp (thay cho alert)
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    
+    const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle';
+    
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+    
+    container.appendChild(toast);
+
+    // Tự xóa sau 3.5 giây
+    setTimeout(() => {
+        toast.style.animation = "fadeOut 0.5s forwards";
+        setTimeout(() => toast.remove(), 500);
+    }, 3000);
+}
+
+// Hàm hiện hộp thoại xác nhận (thay cho confirm)
+function showConfirm(message, callbackYes) {
+    const overlay = document.getElementById('custom-confirm');
+    const msgEl = document.getElementById('confirm-message');
+    const btnYes = document.getElementById('btn-confirm-yes');
+    
+    msgEl.innerText = message;
+    overlay.classList.remove('hidden'); 
+    
+    // Gán sự kiện cho nút Đồng ý (dùng onclick để tránh gán chồng sự kiện cũ)
+    btnYes.onclick = function() {
+        callbackYes(); 
+        closeConfirm();
+    };
+}
+
+function closeConfirm() {
+    document.getElementById('custom-confirm').classList.add('hidden');
+}
+
+
 // --- 1. LOGIC CHUYỂN TRANG & BẢO MẬT ---
 
 function goHome() {
-    // Về trang chủ thì ai cũng được phép
     document.getElementById('home-section').classList.remove('hidden');
     document.getElementById('main-app').classList.add('hidden');
     
-    // Reset menu
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     document.getElementById('btn-home').classList.add('active');
 }
 
 function switchCategory(categoryName) {
-    // BẢO MẬT: Kiểm tra đăng nhập ngay tại đây!
+    // BẢO MẬT: Kiểm tra đăng nhập
     if (!CONFIG.currentUser) {
-        toggleLogin(); // Hiện bảng đăng nhập
-        return;        // Dừng code lại, không cho chuyển trang
+        showToast("Vui lòng đăng nhập để xem mục này!", "error");
+        setTimeout(toggleLogin, 1000); // Đợi 1s rồi hiện bảng login
+        return;
     }
 
-    // Nếu đã đăng nhập thì chạy tiếp logic bình thường:
     if (!MENU_CONFIG[categoryName]) return;
 
-    // 1. Ẩn trang chủ, hiện app
     document.getElementById('home-section').classList.add('hidden');
     document.getElementById('main-app').classList.remove('hidden');
 
-    // 2. Logic chuyển tab
     CONFIG.currentCategory = categoryName;
     const firstTab = MENU_CONFIG[categoryName][0];
     const firstTag = TAG_LIST[firstTab] ? TAG_LIST[firstTab][0] : "";
     
-    // Xóa active home
     document.getElementById('btn-home').classList.remove('active');
 
     if (firstTab && firstTag) {
@@ -49,12 +86,28 @@ function switchCategory(categoryName) {
     }
 }
 
-// --- 2. LOGIC ĐĂNG NHẬP THẬT (REAL FIREBASE) ---
+// --- 2. LOGIC ĐĂNG NHẬP (FIREBASE THẬT) ---
+
+// Tự động kiểm tra trạng thái đăng nhập khi load trang
+setTimeout(() => {
+    if (window.firebaseLibs && window.firebaseLibs.onAuthStateChanged) {
+        const { auth, onAuthStateChanged } = window.firebaseLibs;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Người dùng đã đăng nhập từ trước
+                CONFIG.currentUser = user;
+                updateUserInterface(user);
+            } else {
+                CONFIG.currentUser = null;
+            }
+        });
+    }
+}, 1000);
 
 function toggleLogin() {
     if (CONFIG.currentUser) {
-        const logout = confirm("Bạn có muốn đăng xuất?");
-        if (logout) handleLogout(false);
+        // Dùng hộp thoại xác nhận mới
+        showConfirm("Bạn có chắc chắn muốn đăng xuất?", handleLogout);
     } else {
         document.getElementById('login-overlay').classList.remove('hidden');
     }
@@ -64,72 +117,60 @@ function closeLoginPopup() {
     document.getElementById('login-overlay').classList.add('hidden');
 }
 
-// Hàm gọi cửa sổ đăng nhập Google thật
-async function handleGoogleLogin() {
-    // Kiểm tra kết nối
-    if (!window.authServices) {
-        alert("Đang kết nối đến Google... Vui lòng đợi 1 giây rồi thử lại!");
+function handleGoogleLogin() {
+    if (!window.firebaseLibs) {
+        showToast("Lỗi: Chưa kết nối Firebase!", "error");
         return;
     }
 
-    const { auth, provider, signInWithPopup } = window.authServices;
+    const { auth, signInWithPopup, GoogleAuthProvider } = window.firebaseLibs;
+    const provider = new GoogleAuthProvider();
 
-    try {
-        // Mở popup Google
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        
-        // Đăng nhập thành công -> Chạy hàm xử lý giao diện
-        onLoginSuccess(user);
-        
-    } catch (error) {
-        console.error("Lỗi đăng nhập:", error);
-        alert("Đăng nhập thất bại: " + error.message);
-    }
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            onLoginSuccess(result.user);
+        })
+        .catch((error) => {
+            console.error("Lỗi:", error);
+            showToast("Đăng nhập thất bại: " + error.message, "error");
+        });
 }
 
-// Hàm xử lý giao diện khi đã có User
 function onLoginSuccess(user) {
     CONFIG.currentUser = user;
     closeLoginPopup();
-
-    // Đổi icon user thành avatar thật
-    const userDiv = document.getElementById('user-display');
-    // Lấy ảnh đại diện từ Google
-    const avatarUrl = user.photoURL || "https://ui-avatars.com/api/?name=" + user.displayName;
+    updateUserInterface(user);
     
-    userDiv.innerHTML = `<img src="${avatarUrl}" class="user-avatar" title="${user.displayName}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">`;
-    userDiv.style.border = "2px solid var(--accent-color)";
-
-    updateDownloadButton(); // Mở khóa nút tải
-
-    // Chỉ hiện thông báo chào mừng nếu đang ở màn hình Home
-    const homeSection = document.getElementById('home-section');
-    if (homeSection && !homeSection.classList.contains('hidden')) {
-        alert("Xin chào " + user.displayName + "! Bạn đã có thể tải ảnh.");
-        switchCategory("NHAN_VAT");
-    }
+    showToast("Đăng nhập thành công! Chào " + user.displayName, "success");
+    switchCategory("NHAN_VAT");
 }
 
-function handleLogout(isSilent = false) {
-    // Gọi lệnh đăng xuất thật của Google
-    if (window.authServices) {
-        const { auth, signOut } = window.authServices;
-        signOut(auth).catch((error) => console.error("Lỗi đăng xuất:", error));
-    }
-
-    CONFIG.currentUser = null;
-    
-    // Reset icon user về mặc định
+function updateUserInterface(user) {
     const userDiv = document.getElementById('user-display');
-    userDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
-    userDiv.style.border = "1px solid var(--gray-text)";
+    const avatarUrl = user.photoURL ? user.photoURL : "https://via.placeholder.com/40";
+    
+    userDiv.innerHTML = `<img src="${avatarUrl}" class="user-avatar" title="${user.displayName}">`;
+    userDiv.style.border = "2px solid var(--accent-color)";
 
     updateDownloadButton();
+}
+
+function handleLogout() {
+    if (window.firebaseLibs) {
+        const { auth, signOut } = window.firebaseLibs;
+        signOut(auth).then(() => {
+            CONFIG.currentUser = null;
     
-    // Nếu người dùng tự bấm thoát thì đá về trang chủ
-    if (!isSilent) {
-        goHome();
+            const userDiv = document.getElementById('user-display');
+            userDiv.innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
+            userDiv.style.border = "1px solid var(--gray-text)";
+
+            updateDownloadButton();
+            showToast("Đã đăng xuất thành công!", "success");
+            goHome();
+        }).catch((error) => {
+            showToast("Lỗi đăng xuất!", "error");
+        });
     }
 }
 
@@ -150,28 +191,29 @@ function updateDownloadButton() {
 
 function handleDownload() {
     const user = CONFIG.currentUser;
-    
     if (!user) {
-        toggleLogin();
+        showToast("Bạn cần đăng nhập để tải tài nguyên!", "error");
+        setTimeout(toggleLogin, 1000);
         return;
     }
 
     if (CONFIG.currentLink && CONFIG.currentLink !== "#") {
         window.open(CONFIG.currentLink, '_blank');
     } else {
-        alert("Chưa có link tải chung cho mục này. Hãy thử bấm vào từng ảnh để tải nhé!");
+        showToast("Mục này chưa có link tải chung. Hãy chọn từng ảnh!", "error");
     }
 }
 
 // --- HÀM XỬ LÝ CLICK VÀO ẢNH ---
 function handleCardClick(item) {
     if (!CONFIG.currentUser) {
-        toggleLogin(); 
+        showToast("Vui lòng đăng nhập để tải ảnh này!", "error");
+        toggleLogin();
         return;
     }
 
     if (!item.driveLink || item.driveLink === "") {
-        alert("File này chưa được cập nhật link tải. Vui lòng thử ảnh khác!");
+        showToast("Ảnh này đang cập nhật link tải...", "error");
         return;
     }
 
@@ -179,18 +221,16 @@ function handleCardClick(item) {
     window.open(directLink, '_blank');
 }
 
-// --- CÁC HÀM CŨ (GIỮ NGUYÊN) ---
+// --- CÁC HÀM GIAO DIỆN (GIỮ NGUYÊN) ---
 
 function updateActiveMenu() {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    
     const menuId = {
         "NHAN_VAT": 'btn-nhanvat',
         "KHUNG_CANH": 'btn-khungcanh',
         "MAU_CHUYEN_DONG": 'btn-mauchuyendong',
         "DAO_CU": 'btn-daocu'
     };
-    
     const currentId = menuId[CONFIG.currentCategory];
     if(currentId) {
         const el = document.getElementById(currentId);
@@ -202,7 +242,6 @@ function updateHeaderInfo(tag) {
     const info = TAG_INFO[tag] || TAG_INFO["DEFAULT"];
     const titleEl = document.getElementById('page-title');
     if (titleEl) titleEl.innerHTML = info.title;
-    
     CONFIG.currentLink = convertToDirectLink(info.link);
     updateDownloadButton();
 }
@@ -214,7 +253,6 @@ function convertToDirectLink(url) {
     const index = parts.indexOf("d");
     if (index !== -1) id = parts[index + 1];
     else if (url.includes("id=")) id = url.split("id=")[1].split("&")[0];
-    
     if (id) return `https://drive.google.com/uc?export=download&id=${id}`;
     return url;
 }
@@ -291,7 +329,7 @@ function renderGrid(currentTab, currentTag, currentPage) {
                 `;
             } else {
                 imageHTML = `
-                    <img src="${item.img}" class="card-img-static" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
+                    <img src="${item.img}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
                 `;
             }
 
@@ -332,7 +370,6 @@ function appRun(tab, tag, page) {
             break;
         }
     }
-
     updateActiveMenu();
     updateHeaderInfo(tag);
     renderTabs(tab);
