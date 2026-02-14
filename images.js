@@ -1,59 +1,126 @@
 /* --- images.js --- */
 
-// Khởi tạo danh sách rỗng
-const ALL_IMAGES = [];
+// 1. CẤU HÌNH
+const CDN_BASE = "https://cdn.jsdelivr.net/gh/nguyenanimate99-stack/nguyen-animate/images/";
+// Link CSV từ Google Sheet của bạn
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSbcaiaDqyptf1IYpiQL3xyp7jhpjbGdH4GRLco7uo-RAKErohJ4xi1Oftoc8qWcPpoZA0R49MKnB59/pub?gid=0&single=true&output=csv";
 
-// --- HÀM HỖ TRỢ ĐÃ SỬA LỖI (Giờ đã đọc được file GIF) ---
-function addBatch(tab, tag, listImages) {
+const ALL_IMAGES = []; // Mảng chứa dữ liệu cuối cùng
+
+// =================================================================
+// 2. CÁC HÀM HỖ TRỢ
+// =================================================================
+
+// Hàm thêm ảnh vào hệ thống
+function addBatch(tab, tag, folderPath, listImages) {
+    let currentPath = CDN_BASE + folderPath + "/";
     listImages.forEach(item => {
         ALL_IMAGES.push({
-            id: item[0],              // Số thứ tự
-            title: item[1],           // Tên hiển thị
-            tab: tab,                 // Tab (VD: NV_HIEN_DAI)
-            tag: tag,                 // Tag (VD: Bối Cảnh...)
-            img: "images/" + item[2], // Ảnh tĩnh
-            driveLink: item[3] || "", // Link Drive
-            
-            // --- DÒNG MỚI QUAN TRỌNG: Đọc file GIF từ tham số thứ 5 ---
-            gif: item[4] ? "images/" + item[4] : "" 
+            id: item[0],
+            title: item[1],
+            tab: tab,
+            tag: tag,
+            img: currentPath + item[2],
+            driveLink: item[3] || "", // Link drive lấy từ tham số thứ 4
+            gif: item[4] ? currentPath + item[4] : ""
         });
     });
 }
 
+// Hàm tạo danh sách (Đã nâng cấp để nhận danh sách Link)
+// Tham số thứ 4: danhSachLinkRieng là mảng chứa các link lấy từ cột Sheet
+function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRieng = []) {
+    let list = [];
+    for (let i = 1; i <= soLuong; i++) {
+        // Lấy link từ mảng Sheet (nếu có). 
+        // i bắt đầu từ 1, nhưng mảng bắt đầu từ 0 nên ta lấy [i-1]
+        let link = "";
+        if (danhSachLinkRieng && danhSachLinkRieng[i - 1]) {
+            link = danhSachLinkRieng[i - 1];
+        }
+
+        list.push([
+            i,                  // ID
+            i.toString(),       // Tên hiển thị
+            tenDau + i + duoiFile, // Tên file
+            link                // Link Drive đã lấy được
+        ]);
+    }
+    return list;
+}
+
 // =================================================================
-// KHU VỰC NHẬP DỮ LIỆU
-// Cấu trúc: [ ID, "Tên", "Ảnh Tĩnh", "Link Tải", "Ảnh GIF (Tùy chọn)" ]
+// 3. HÀM TẢI DỮ LIỆU TỪ SHEET VÀ KHỞI TẠO WEB
 // =================================================================
 
-// 1. NHÂN VẬT - HIỆN ĐẠI
-addBatch("NV_HIEN_DAI", "Bối Cảnh Hiện Đại 2", [
-    // Dòng này của bạn giờ sẽ hoạt động:
-    [1, "Đường Phố Cyber", "cyber-01.jpg", "https://drive.google.com/file/d/1A2b3C.../view", "gif.gif"],
-    
-    // Dòng này không có GIF thì để trống tham số cuối
-    [2, "Thành Phố Đêm",   "city-night.jpg", "https://drive.google.com/file/d/XYZ.../view"],
-]);
+async function khoiTaoDuLieu() {
+    try {
+        console.log("Đang tải link từ Google Sheet...");
+        
+        // 1. Tải CSV từ Google Sheet
+        const response = await fetch(SHEET_URL);
+        const dataText = await response.text();
 
-addBatch("NV_HIEN_DAI", "Trong Thành Phố", [
-    [10, "Ngã Tư Đường",  "street-01.jpg", "LINK_DRIVE_CUA_BAN"],
-    [11, "Công Viên",     "park-01.jpg",   "LINK_DRIVE_CUA_BAN"],
-]);
+        // 2. Phân tích CSV thành các cột dữ liệu
+        // Tách dòng
+        const rows = dataText.split(/\r?\n/).map(row => row.split(','));
+        const headers = rows[0]; // Hàng tiêu đề (NVHD, NVCX...)
+        const linkMap = {};      // Object chứa link: { "NVHD": [...links], "NVCX": [...links] }
 
+        // Khởi tạo mảng cho từng cột dựa theo tiêu đề
+        headers.forEach(h => { if(h) linkMap[h.trim()] = []; });
 
-// 2. NHÂN VẬT - CỔ XƯA
-addBatch("NV_CO_XUA", "Kiếm Hiệp", [
-    [3, "Kiếm Khách",    "kiem-hiep-02.jpg", "https://drive.google.com/file/d/XYZ.../view"],
-    [4, "Nữ Hiệp",       "nu-hiep-01.jpg",   "LINK_DRIVE_CUA_BAN"],
-]);
+        // Duyệt qua các dòng dữ liệu (từ dòng 2 trở đi)
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            row.forEach((cell, index) => {
+                const headerName = headers[index] ? headers[index].trim() : null;
+                // Chỉ lấy dữ liệu nếu cột đó có tên (Header)
+                if (headerName) {
+                    // Loại bỏ các ký tự thừa như ngoặc kép nếu có
+                    let cleanLink = cell.trim().replace(/^"|"$/g, '');
+                    linkMap[headerName].push(cleanLink);
+                }
+            });
+        }
 
+        // =========================================================
+        // 4. KHU VỰC NHẬP DỮ LIỆU (SỬA Ở ĐÂY NHƯ BÌNH THƯỜNG)
+        // =========================================================
 
-// 3. KHUNG CẢNH - HIỆN ĐẠI
-addBatch("KC_HIEN_DAI", "Cao Ốc", [
-    [5, "Tòa Nhà Bitexco", "cyber-01.jpg", ""], 
-    [6, "Landmark 81",     "lm81.jpg",     "LINK_DRIVE_CUA_BAN"],
-]);
+        // --- MỤC 1: NHÂN VẬT HIỆN ĐẠI (Cột Sheet: NVHD) ---
+        addBatch(
+            "NV_HIEN_DAI",
+            "Bối Cảnh Hiện Đại 2",
+            "NHANVAT/NHANVATHIENDAI",
+            // Truyền linkMap["NVHD"] vào hàm
+            taoDanhSachTuDong(120, "NVHD", ".webp", linkMap["NVHD"]) 
+        );
 
-// 4. KHUNG CẢNH - CỔ XƯA
-addBatch("KC_CO_XUA", "Đền Chùa", [
-    [7, "Chùa Một Cột", "kiem-hiep-03.jpg", "LINK_DRIVE_CUA_BAN"],
-]);
+        // --- MỤC 2: NHÂN VẬT CỔ XƯA (Cột Sheet: NVCX) ---
+        addBatch(
+            "NV_CO_XUA",
+            "Kiếm Hiệp",
+            "NHANVAT/NVCX",
+            // Truyền linkMap["NVCX"] vào hàm
+            taoDanhSachTuDong(601, "NVCX", ".webp", linkMap["NVCX"]) 
+        );
+
+        console.log("Đã tải xong dữ liệu! Tổng số ảnh:", ALL_IMAGES.length);
+
+        // 5. KÍCH HOẠT LẠI GIAO DIỆN (QUAN TRỌNG)
+        // Vì dữ liệu tải chậm hơn code chạy, ta cần báo cho trang web vẽ lại
+        // Cách 1: Nếu bạn có hàm render() bên script.js, hãy gọi nó ở đây.
+        if (typeof renderGallery === "function") {
+            renderGallery(); 
+        } 
+        // Cách 2: Bắn tín hiệu cho script.js biết
+        window.dispatchEvent(new Event('DuLieuDaSanSang'));
+
+    } catch (error) {
+        console.error("Lỗi tải dữ liệu từ Google Sheet:", error);
+    }
+}
+
+// Chạy hàm khởi tạo
+khoiTaoDuLieu();
