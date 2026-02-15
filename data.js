@@ -15,8 +15,8 @@ const TAG_INFO = {
     "DEFAULT": { title: "KHO <span>DỮ LIỆU</span>", link: "#" },
 
     // --- DỮ LIỆU (NHÂN VẬT HIỆN ĐẠI) ---
-    "Bối Cảnh Hiện Đại 2": { title: "HIỆN <span>ĐẠI 2</span>", link: "" },
-    "Trong Thành Phố": { title: "THÀNH <span>PHỐ</span>", link: "#" },
+    "NV Hiện Đại": { title: "HIỆN <span>ĐẠI 2</span>", link: "" },
+    "NV Đô Thị": { title: "THÀNH <span>PHỐ</span>", link: "#" },
     "Thập Niên 8090": { title: "RETRO <span>8090</span>", link: "#" },
     
     // --- DỮ LIỆU (NHÂN VẬT CỔ XƯA) ---
@@ -51,7 +51,7 @@ const TAG_INFO = {
 
 // 3. Danh sách Tag cho từng Tab
 const TAG_LIST = {
-    "NV_HIEN_DAI": ["Bối Cảnh Hiện Đại 2", "Trong Thành Phố", "Thập Niên 8090"],
+    "NV_HIEN_DAI": ["NV Hiện Đại", "NV Đô Thị", "Thập Niên 8090"],
     "NV_CO_XUA": ["Kiếm Hiệp", "Cung Đình", "Làng Quê Yên Bình"],
     "KC_HIEN_DAI": ["Cao Ốc", "Phòng Gaming"],
     "KC_CO_XUA": ["Rừng Trúc", "Đền Chùa"],
