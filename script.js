@@ -376,3 +376,19 @@ function appRun(tab, tag, page) {
     renderFilters(tab, tag);
     renderGrid(tab, tag, page);
 }
+
+/* --- TÍNH NĂNG MỚI: TỰ ĐỘNG CUỘN LÊN ĐẦU TRANG --- */
+document.addEventListener('click', function(e) {
+    // Kiểm tra nếu bấm vào: Phân trang, Tab, Bộ lọc, hoặc Menu chính
+    if (e.target.closest('.page-btn') || 
+        e.target.closest('.tab-btn') || 
+        e.target.closest('.filter-pill') ||
+        e.target.closest('.nav-item')) {
+        
+        // Cuộn ngay lập tức lên đầu (behavior: 'auto' để nhảy nhanh, 'smooth' để trượt từ từ)
+        window.scrollTo({
+            top: 0,
+            behavior: 'auto' 
+        });
+    }
+});
