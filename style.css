@@ -337,7 +337,6 @@ nav {
         font-size: 12px; top: 10px; left: 10px;
         background: none; padding: 0;
         max-width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-        text-shadow: 0 2px 4px var(--shadow), 0 0 10px var(--bg-color); 
     }
 
     /* Scroll bar ẩn */
@@ -355,4 +354,15 @@ nav {
     .main-title { font-size: 28px; }
     .header-section { margin-bottom: 20px; }
     .back-btn { position: relative; top: auto; left: auto; transform: none; display: inline-block; margin-bottom: 10px; padding: 5px 10px; }
+
+    /* --- SỬA LỖI PHÂN TRANG BỊ KHUẤT TRÊN MOBILE --- */
+    .pagination {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+    .pagination::-webkit-scrollbar { display: none; }
+    .page-btn { flex-shrink: 0; }
 }
