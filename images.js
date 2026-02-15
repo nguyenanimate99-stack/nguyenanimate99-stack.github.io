@@ -88,16 +88,25 @@ async function khoiTaoDuLieu() {
         // 4. KHU VỰC NHẬP DỮ LIỆU (SỬA Ở ĐÂY NHƯ BÌNH THƯỜNG)
         // =========================================================
 
-        // --- MỤC 1: NHÂN VẬT HIỆN ĐẠI (Cột Sheet: NVHD) ---
+        // --- MỤC 1: NHÂN VẬT HIỆN ĐẠI
         addBatch(
             "NV_HIEN_DAI",
-            "Bối Cảnh Hiện Đại 2",
+            "NV Hiện Đại",
             "NHANVAT/NHANVATHIENDAI",
             // Truyền linkMap["NVHD"] vào hàm
             taoDanhSachTuDong(120, "NVHD", ".webp", linkMap["NVHD"]) 
         );
 
-        // --- MỤC 2: NHÂN VẬT CỔ XƯA (Cột Sheet: NVCX) ---
+        // --- MỤC 2: NHÂN VẬT ĐÔ THỊ
+        addBatch(
+            "NV_HIEN_DAI",
+            "NV Đô Thị",
+            "NHANVAT/NHANVATDOTHI",
+            // Truyền linkMap["NVDT"] vào hàm
+            taoDanhSachTuDong(130, "NVDT", ".webp", linkMap["NVDT"]) 
+        );
+
+        // --- MỤC 3: NHÂN VẬT CỔ XƯA
         addBatch(
             "NV_CO_XUA",
             "Kiếm Hiệp",
