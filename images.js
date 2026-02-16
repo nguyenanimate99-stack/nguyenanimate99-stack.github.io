@@ -27,15 +27,13 @@ function addBatch(tab, tag, folderPath, listImages) {
     });
 }
 
-// Hàm tạo danh sách (Đã nâng cấp để nhận danh sách Link)
-// Tham số thứ 4: danhSachLinkRieng là mảng chứa các link lấy từ cột Sheet
+// Hàm tạo danh sách (Đã nâng cấp: Kiểm tra an toàn để tránh lỗi web)
 function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRieng = []) {
     let list = [];
     for (let i = 1; i <= soLuong; i++) {
-        // Lấy link từ mảng Sheet (nếu có). 
-        // i bắt đầu từ 1, nhưng mảng bắt đầu từ 0 nên ta lấy [i-1]
+        // Lấy link từ mảng Sheet (nếu có và mảng không rỗng)
         let link = "";
-        if (danhSachLinkRieng && danhSachLinkRieng[i - 1]) {
+        if (danhSachLinkRieng && danhSachLinkRieng.length > 0 && danhSachLinkRieng[i - 1]) {
             link = danhSachLinkRieng[i - 1];
         }
 
@@ -43,7 +41,7 @@ function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRien
             i,                  // ID
             i.toString(),       // Tên hiển thị
             tenDau + i + duoiFile, // Tên file
-            link                // Link Drive đã lấy được
+            link                // Link Drive
         ]);
     }
     return list;
@@ -62,22 +60,22 @@ async function khoiTaoDuLieu() {
         const dataText = await response.text();
 
         // 2. Phân tích CSV thành các cột dữ liệu
-        // Tách dòng
         const rows = dataText.split(/\r?\n/).map(row => row.split(','));
-        const headers = rows[0]; // Hàng tiêu đề (NVHD, NVCX...)
-        const linkMap = {};      // Object chứa link: { "NVHD": [...links], "NVCX": [...links] }
+        const headers = rows[0]; // Hàng tiêu đề 
+        const linkMap = {};      // Object chứa link
 
         // Khởi tạo mảng cho từng cột dựa theo tiêu đề
-        headers.forEach(h => { if(h) linkMap[h.trim()] = []; });
+        if (headers) {
+            headers.forEach(h => { if(h) linkMap[h.trim()] = []; });
+        }
 
         // Duyệt qua các dòng dữ liệu (từ dòng 2 trở đi)
         for (let i = 1; i < rows.length; i++) {
             const row = rows[i];
             row.forEach((cell, index) => {
                 const headerName = headers[index] ? headers[index].trim() : null;
-                // Chỉ lấy dữ liệu nếu cột đó có tên (Header)
                 if (headerName) {
-                    // Loại bỏ các ký tự thừa như ngoặc kép nếu có
+                    // Loại bỏ ngoặc kép nếu có
                     let cleanLink = cell.trim().replace(/^"|"$/g, '');
                     linkMap[headerName].push(cleanLink);
                 }
@@ -85,46 +83,34 @@ async function khoiTaoDuLieu() {
         }
 
         // =========================================================
-        // 4. KHU VỰC NHẬP DỮ LIỆU (SỬA Ở ĐÂY NHƯ BÌNH THƯỜNG)
+        // 4. KHU VỰC NHẬP DỮ LIỆU (ĐÃ BỔ SUNG ĐẦY ĐỦ)
+        // =========================================================
+        // LƯU Ý: 
+        // - Tham số 3: Là tên THƯ MỤC trên Github (Ví dụ: "KHUNGCANH/CAOOC")
+        // - linkMap["TênCột"]: Phải trùng tên cột dòng 1 trong Google Sheet
         // =========================================================
 
-        // --- MỤC 1: NHÂN VẬT HIỆN ĐẠI
-        addBatch(
-            "NV_HIEN_DAI",
-            "NV Hiện Đại",
-            "NHANVAT/NHANVATHIENDAI",
-            // Truyền linkMap["NVHD"] vào hàm
-            taoDanhSachTuDong(120, "NVHD", ".webp", linkMap["NVHD"]) 
-        );
+        // --- MỤC 1: NHÂN VẬT ---
+        addBatch("NV_HIEN_DAI", "NV Hiện Đại", "NHANVAT/NHANVATHIENDAI", taoDanhSachTuDong(120, "NVHD", ".webp", linkMap["NVHD"]));
+        addBatch("NV_HIEN_DAI", "NV Đô Thị", "NHANVAT/NHANVATDOTHI", taoDanhSachTuDong(130, "NVDT", ".webp", linkMap["NVDT"]));
 
-        // --- MỤC 2: NHÂN VẬT ĐÔ THỊ
-        addBatch(
-            "NV_HIEN_DAI",
-            "NV Đô Thị",
-            "NHANVAT/NHANVATDOTHI",
-            // Truyền linkMap["NVDT"] vào hàm
-            taoDanhSachTuDong(130, "NVDT", ".webp", linkMap["NVDT"]) 
-        );
+        addBatch("NV_CO_XUA", "Kiếm Hiệp", "NHANVAT/NVCX", taoDanhSachTuDong(601, "NVCX", ".webp", linkMap["NVCX"]));
 
-        // --- MỤC 3: NHÂN VẬT CỔ XƯA
-        addBatch(
-            "NV_CO_XUA",
-            "Kiếm Hiệp",
-            "NHANVAT/NVCX",
-            // Truyền linkMap["NVCX"] vào hàm
-            taoDanhSachTuDong(601, "NVCX", ".webp", linkMap["NVCX"]) 
-        );
+        // --- MỤC 2: KHUNG CẢNH (Mới thêm) ---
+
+        // --- MỤC 3: MẪU CHUYỂN ĐỘNG (Mới thêm - Ví dụ dùng .gif) ---
+        addBatch("MCD_HIEN_DAI", "Súng Ống", "MAUCHUYENDONG/MCDHD", taoDanhSachTuDong(5, "MCDHD", ".gif", linkMap["MCDHD"]));
+
 
         console.log("Đã tải xong dữ liệu! Tổng số ảnh:", ALL_IMAGES.length);
 
-        // 5. KÍCH HOẠT LẠI GIAO DIỆN (QUAN TRỌNG)
-        // Vì dữ liệu tải chậm hơn code chạy, ta cần báo cho trang web vẽ lại
-        // Cách 1: Nếu bạn có hàm render() bên script.js, hãy gọi nó ở đây.
-        if (typeof renderGallery === "function") {
-            renderGallery(); 
-        } 
-        // Cách 2: Bắn tín hiệu cho script.js biết
-        window.dispatchEvent(new Event('DuLieuDaSanSang'));
+        // 5. KÍCH HOẠT LẠI GIAO DIỆN
+        // Gọi hàm appRun từ script.js để vẽ lại màn hình ngay sau khi tải xong
+        if (typeof appRun === "function" && typeof CONFIG !== "undefined") {
+            appRun(CONFIG.currentTab, CONFIG.currentTag, 1);
+        } else if (typeof renderGallery === "function") {
+            renderGallery();
+        }
 
     } catch (error) {
         console.error("Lỗi tải dữ liệu từ Google Sheet:", error);
