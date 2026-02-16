@@ -99,7 +99,7 @@ async function khoiTaoDuLieu() {
         // --- MỤC 2: KHUNG CẢNH (Mới thêm) ---
 
         // --- MỤC 3: MẪU CHUYỂN ĐỘNG (Mới thêm - Ví dụ dùng .gif) ---
-        addBatch("MCD_HIEN_DAI", "Súng Ống", "MAUCHUYENDONG/MCDHD", taoDanhSachTuDong(5, "MCDHD", ".gif", linkMap["MCDHD"]));
+        addBatch("MCD_HIEN_DAI", "Súng Ống", "MAUCHUYENDONG/MCDHD", taoDanhSachTuDong(148, "MCDHD", ".gif", linkMap["MCDHD"]));
 
 
         console.log("Đã tải xong dữ liệu! Tổng số ảnh:", ALL_IMAGES.length);
@@ -119,3 +119,4 @@ async function khoiTaoDuLieu() {
 
 // Chạy hàm khởi tạo
 khoiTaoDuLieu();
+
