@@ -22,13 +22,13 @@ function addBatch(tab, tag, folderPath, listImages) {
             tag: tag,
             img: currentPath + item[2],
             driveLink: item[3] || "", // Link drive lấy từ tham số thứ 4
-            gif: item[4] ? currentPath + item[4] : ""
+            gif: item[4] ? currentPath + item[4] : "" // Link gif lấy từ tham số thứ 5
         });
     });
 }
 
-// Hàm tạo danh sách (Đã nâng cấp: Kiểm tra an toàn để tránh lỗi web)
-function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRieng = []) {
+// Hàm tạo danh sách (Đã nâng cấp: Thêm tham số coGif để tự tạo link ảnh .gif)
+function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRieng = [], coGif = false) {
     let list = [];
     for (let i = 1; i <= soLuong; i++) {
         // Lấy link từ mảng Sheet (nếu có và mảng không rỗng)
@@ -37,11 +37,15 @@ function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRien
             link = danhSachLinkRieng[i - 1];
         }
 
+        // Tự động tạo tên file GIF nếu coGif = true
+        let tenGif = coGif ? (tenDau + i + ".gif") : "";
+
         list.push([
             i,                  // ID
             i.toString(),       // Tên hiển thị
-            tenDau + i + duoiFile, // Tên file
-            link                // Link Drive
+            tenDau + i + duoiFile, // Tên file tĩnh
+            link,               // Link Drive
+            tenGif              // Tên file GIF dùng cho hiệu ứng lia chuột
         ]);
     }
     return list;
@@ -91,14 +95,18 @@ async function khoiTaoDuLieu() {
         // =========================================================
 
         // --- MỤC 1: NHÂN VẬT ---
-        addBatch("NV_HIEN_DAI", "NV Hiện Đại", "NHANVAT/NHANVATHIENDAI", taoDanhSachTuDong(120, "NVHD", ".webp", linkMap["NVHD"]));
-        addBatch("NV_HIEN_DAI", "NV Đô Thị", "NHANVAT/NHANVATDOTHI", taoDanhSachTuDong(130, "NVDT", ".webp", linkMap["NVDT"]));
+        // (Đã thêm tham số "true" ở cuối để tự động chèn link ảnh .gif)
+        addBatch("NV_HIEN_DAI", "NV Hiện Đại", "NHANVAT/NHANVATHIENDAI", taoDanhSachTuDong(120, "NVHD", ".webp", linkMap["NVHD"], true));
+        addBatch("NV_HIEN_DAI", "NV Đô Thị", "NHANVAT/NHANVATDOTHI", taoDanhSachTuDong(130, "NVDT", ".webp", linkMap["NVDT"], true));
 
-        addBatch("NV_CO_XUA", "Kiếm Hiệp", "NHANVAT/NVCX", taoDanhSachTuDong(601, "NVCX", ".webp", linkMap["NVCX"]));
+        addBatch("NV_CO_XUA", "Kiếm Hiệp", "NHANVAT/NVCX", taoDanhSachTuDong(601, "NVCX", ".webp", linkMap["NVCX"], true));
 
         // --- MỤC 2: KHUNG CẢNH (Mới thêm) ---
+        addBatch("HU_THUONG", "hieuung1", "MAUCHUYENDONG/TN", taoDanhSachTuDong(3, "TN", ".webp", linkMap["TN"], true));
+        addBatch("HU_THUONG", "hieuung2", "MAUCHUYENDONG/TN", taoDanhSachTuDong(3, "TN", ".webp", linkMap["TN"], true));
 
         // --- MỤC 3: MẪU CHUYỂN ĐỘNG (Mới thêm - Ví dụ dùng .gif) ---
+        // Mục này ảnh gốc đã là .gif nên không cần thêm tham số "true"
         addBatch("MCD_HIEN_DAI", "Súng Ống", "MAUCHUYENDONG/MCDHD", taoDanhSachTuDong(200, "MCDHD", ".gif", linkMap["MCDHD"]));
         addBatch("MCD_CO_XUA", "Kiếm", "MAUCHUYENDONG/MCDCX", taoDanhSachTuDong(196, "MCDCX", ".gif", linkMap["MCDCX"]));
         addBatch("MCD_HIEN_DAI", "Xe Cộ", "MAUCHUYENDONG/MCDDV", taoDanhSachTuDong(196, "MCDDV", ".gif", linkMap["MCDDV"]));
