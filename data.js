@@ -8,6 +8,8 @@ const MENU_CONFIG = {
     "KHUNG_CANH": ["KC_HIEN_DAI", "KC_CO_XUA"],
     "MAU_CHUYEN_DONG": ["MCD_HIEN_DAI", "MCD_CO_XUA"],
     "DAO_CU": ["DC_HIEN_DAI", "DC_CO_XUA"],
+    "HIEU_UNG": ["HU_THUONG", "HU_TU_TIEN"],
+
 };
 
 // 2. Cấu hình chi tiết cho từng Tag
@@ -47,6 +49,16 @@ const TAG_INFO = {
     // --- DỮ LIỆU (ĐẠO CỤ CỔ XƯA) ---
     "TAG1": { title: "TAG1 <span>KHÍ</span>", link: "link-tai-kiem" },
     "TAG2": { title: "TAG2 <span>KHÍ</span>", link: "link-tai-kiem" },
+
+    // --- DỮ LIỆU (ĐẠO CỤ HIỆN ĐẠI) ---
+    "hieuung1": { title: "HIỆU ỨNG <span>THƯỜNG 1</span>", link: "link-tai-sung" },
+    "hieuung2": { title: "HIỆU ỨNG <span>THƯỜNG 2</span>", link: "link-tai-sung" },
+
+    // --- DỮ LIỆU (ĐẠO CỤ HIỆN ĐẠI) ---
+    "hieuung3": { title: "HIỆU ỨNG <span>TU TIÊN 3</span>", link: "link-tai-sung" },
+    "hieuung4": { title: "HIỆU ỨNG <span>TU TIÊN 4</span>", link: "link-tai-sung" },
+
+
 };
 
 // 3. Danh sách Tag cho từng Tab
@@ -59,4 +71,7 @@ const TAG_LIST = {
     "MCD_CO_XUA": ["Kiếm", "Cung Tên"],
     "DC_HIEN_DAI": ["THẺ1", "THẺ2"],
     "DC_CO_XUA": ["TAG1", "TAG2"],
+    "HU_THUONG": ["hieuung1", "hieuung2"],
+    "HU_TU_TIEN": ["hieuung3", "hieuung4"],
+
 };
