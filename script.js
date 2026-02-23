@@ -184,7 +184,7 @@ function updateDownloadButton() {
         btn.innerHTML = `<i class="fas fa-lock"></i> ĐĂNG NHẬP ĐỂ TẢI`;
         btn.style.opacity = "0.7";
     } else {
-        btn.innerHTML = `TẢI TẤT CẢ`;
+        btn.innerHTML = `TẢI TOÀN BỘ`;
         btn.style.opacity = "1";
     }
 }
@@ -229,7 +229,9 @@ function updateActiveMenu() {
         "NHAN_VAT": 'btn-nhanvat',
         "KHUNG_CANH": 'btn-khungcanh',
         "MAU_CHUYEN_DONG": 'btn-mauchuyendong',
-        "DAO_CU": 'btn-daocu'
+        "DAO_CU": 'btn-daocu',
+        "HIEU_UNG": 'btn-hieuung',
+
     };
     const currentId = menuId[CONFIG.currentCategory];
     if(currentId) {
@@ -322,14 +324,23 @@ function renderGrid(currentTab, currentTag, currentPage) {
             card.onclick = () => { handleCardClick(item); };
 
             let imageHTML = ``;
+            // CẬP NHẬT: Gộp thành 1 thẻ img duy nhất để tối ưu load trang và bắt lỗi ảnh hỏng
             if (item.gif && item.gif !== "") {
                 imageHTML = `
-                    <img src="${item.img}" class="card-img-static" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
-                    <img src="${item.gif}" class="card-img-gif" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
+                    <img 
+                        src="${item.img}" 
+                        data-static="${item.img}" 
+                        data-gif="${item.gif}" 
+                        onmouseover="if(this.dataset.gif) this.src=this.dataset.gif" 
+                        onmouseout="this.src=this.dataset.static" 
+                        onerror="this.src=this.dataset.static; this.dataset.gif=''" 
+                        style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;"
+                        alt="${item.title}"
+                    >
                 `;
             } else {
                 imageHTML = `
-                    <img src="${item.img}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;">
+                    <img src="${item.img}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;" alt="${item.title}">
                 `;
             }
 
