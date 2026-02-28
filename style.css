@@ -218,6 +218,16 @@ nav {
     transition: 0.3s; font-size: 14px;
 }
 .google-btn:hover { background: #f1f1f1; transform: translateY(-2px); }
+
+.google-btn i {
+    background: linear-gradient(to bottom right, #ea4335 0%, #ea4335 30%, #fbbc05 30%, #fbbc05 50%, #34a853 50%, #34a853 70%, #4285f4 70%, #4285f4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; 
+    display: inline-block;
+}
+
 .close-login {
     background: transparent; border: none; color: var(--gray-text);
     margin-top: 15px; cursor: pointer; text-decoration: underline; font-size: 12px;
@@ -365,4 +375,49 @@ nav {
     }
     .pagination::-webkit-scrollbar { display: none; }
     .page-btn { flex-shrink: 0; }
+}
+/* =========================================
+   HIỆU ỨNG TƯƠNG TÁC (MENU, GLOW & LƯỚI HẠT)
+========================================= */
+
+#home-section {
+    position: relative;
+    z-index: 10;
+}
+
+.home-container > * {
+    position: relative;
+    z-index: 20;
+    text-shadow: 0 2px 10px var(--bg-color); /* Chữ rõ ràng hơn */
+}
+
+/* --- 1. HIỆU ỨNG ÁNH SÁNG CHUỘT (GIỮ NGUYÊN) --- */
+.mouse-glow {
+    position: fixed; top: 0; left: 0;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 50%);
+    filter: blur(50px);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1; 
+    transition: opacity 0.4s ease;
+    will-change: transform;
+}
+
+/* --- 2. LƯỚI HẠT TƯƠNG TÁC (PARTICLES CANVAS) --- */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Không cản trở click */
+    z-index: 0; /* Nằm dưới cùng nhất */
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+
+#particle-canvas.active {
+    opacity: 1;
 }
