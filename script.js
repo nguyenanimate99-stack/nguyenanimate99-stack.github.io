@@ -24,11 +24,11 @@ function showToast(message, type = 'success') {
     
     container.appendChild(toast);
 
-    // Tự xóa sau 3.5 giây
+    // Tự xóa sau 1.5 giây
     setTimeout(() => {
         toast.style.animation = "fadeOut 0.5s forwards";
         setTimeout(() => toast.remove(), 500);
-    }, 3000);
+    }, 1000);
 }
 
 // Hàm hiện hộp thoại xác nhận (thay cho confirm)
@@ -66,7 +66,7 @@ function switchCategory(categoryName) {
     // BẢO MẬT: Kiểm tra đăng nhập
     if (!CONFIG.currentUser) {
         showToast("Vui lòng đăng nhập để xem mục này!", "error");
-        setTimeout(toggleLogin, 1000); // Đợi 1s rồi hiện bảng login
+        setTimeout(toggleLogin, 200); // Đợi 1s rồi hiện bảng login
         return;
     }
 
@@ -231,6 +231,9 @@ function updateActiveMenu() {
         "MAU_CHUYEN_DONG": 'btn-mauchuyendong',
         "DAO_CU": 'btn-daocu',
         "HIEU_UNG": 'btn-hieuung',
+        "DONG_VAT": 'btn-dongvat',
+        "BIEU_CAM_&_CU_CHI": 'btn-bieucam&cuchi',
+        "VAT_LIEU_MIEN_PHI": 'btn-vatlieumienphi',
 
     };
     const currentId = menuId[CONFIG.currentCategory];
@@ -274,6 +277,20 @@ function renderTabs(currentTab) {
             let label = key;
             if (key.includes("HIEN_DAI")) label = "HIỆN ĐẠI";
             if (key.includes("CO_XUA")) label = "CỔ XƯA";
+            if (key.includes("DAC_BIET")) label = "ĐẶC BIỆT";
+            if (key.includes("THONG_THUONG")) label = "THÔNG THƯỜNG";
+            if (key.includes("VU_KHI")) label = "VŨ KHÍ";
+            if (key.includes("HANG_NGAY")) label = "HÀNG NGÀY";
+            if (key.includes("CHU_DE")) label = "CHỦ ĐỀ";
+            if (key.includes("DONG_VAT")) label = "ĐỘNG VẬT";
+            if (key.includes("QUAI_VAT")) label = "QUÁI VẬT";
+            if (key.includes("BIEU_CAM")) label = "BIỂU CẢM";
+            if (key.includes("CU_CHI")) label = "CỬ CHỈ";
+            if (key.includes("NHAN_VAT")) label = "NHÂN VẬT";
+            if (key.includes("KHUNG_CANH")) label = "KHUNG CẢNH";
+            if (key.includes("DAO_CU")) label = "ĐẠO CỤ";
+            if (key.includes("PHAN_MEM")) label = "PHẦN MỀM";
+            if (key.includes("THONG_BAO")) label = "THÔNG BÁO";
             
             btn.className = `tab-btn ${key === currentTab ? 'active' : ''}`;
             btn.innerText = label;
@@ -333,14 +350,14 @@ function renderGrid(currentTab, currentTag, currentPage) {
                         data-gif="${item.gif}" 
                         onmouseover="if(this.dataset.gif) this.src=this.dataset.gif" 
                         onmouseout="this.src=this.dataset.static" 
-                        onerror="this.src=this.dataset.static; this.dataset.gif=''" 
+                        onerror="this.onerror=null; this.src=this.src.replace('.gif', '.webp'); if(this.dataset.static) this.dataset.static=this.dataset.static.replace('.gif', '.webp');" 
                         style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;"
                         alt="${item.title}"
                     >
                 `;
             } else {
                 imageHTML = `
-                    <img src="${item.img}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;" alt="${item.title}">
+                    <img src="${item.img}" onerror="this.onerror=null; this.src=this.src.replace('.gif', '.webp');" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;" alt="${item.title}">
                 `;
             }
 
@@ -403,3 +420,168 @@ document.addEventListener('click', function(e) {
         });
     }
 });
+/* =========================================
+   CÁC TÍNH NĂNG TƯƠNG TÁC PC HOÀN CHỈNH
+========================================= */
+
+// --- 1. HIỆU ỨNG ẨN/HIỆN THANH MENU TRÊN PC KHI CUỘN ---
+let lastScrollTop = 0;
+const navbar = document.querySelector('nav');
+
+window.addEventListener('scroll', function() {
+    if (window.innerWidth > 1024) {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        navbar.style.top = (currentScroll > lastScrollTop && currentScroll > 100) ? '-100px' : '20px';
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    } else {
+        navbar.style.top = '0px';
+    }
+});
+
+const homeSection = document.getElementById('home-section');
+
+// Xóa các hiệu ứng cũ để tránh lỗi dán đè
+document.querySelectorAll('.mouse-glow, #rain-container, #particle-canvas').forEach(el => el.remove());
+
+// --- 2. HIỆU ỨNG ÁNH SÁNG CHUỘT (GLOW) ---
+const glowEl = document.createElement('div');
+glowEl.className = 'mouse-glow';
+document.body.appendChild(glowEl);
+
+let mouseX = -1000;
+let mouseY = -1000;
+
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    if (!homeSection.classList.contains('hidden')) {
+        glowEl.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
+        glowEl.style.opacity = document.body.classList.contains('light-mode') ? '0.15' : '0.08';
+    } else {
+        glowEl.style.opacity = '0';
+    }
+});
+
+document.addEventListener('mouseleave', () => {
+    glowEl.style.opacity = '0';
+    mouseX = -1000;
+    mouseY = -1000;
+});
+
+
+// --- 3. HIỆU ỨNG LƯỚI HẠT TƯƠNG TÁC (PARTICLES NETWORK) ---
+const canvas = document.createElement('canvas');
+canvas.id = 'particle-canvas';
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
+
+let particlesArray = [];
+const connectionDistance = 120; // Khoảng cách nối các hạt với nhau
+const mouseConnectionDistance = 180; // Khoảng cách tia sáng nối từ chuột tới hạt
+
+// Cập nhật kích thước canvas theo màn hình
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Khởi tạo đối tượng Hạt
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 1; // Kích thước hạt
+        this.speedX = (Math.random() - 0.5) * 1.2; // Tốc độ trôi ngang
+        this.speedY = (Math.random() - 0.5) * 1.2; // Tốc độ trôi dọc
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Dội ngược lại khi chạm viền màn hình
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw(colorStr) {
+        ctx.fillStyle = colorStr;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+// Sinh ra các hạt
+function initParticles() {
+    particlesArray = [];
+    // Tính toán số lượng hạt dựa trên độ lớn màn hình cho vừa vặn
+    const numberOfParticles = (canvas.width * canvas.height) / 12000; 
+    for (let i = 0; i < numberOfParticles; i++) {
+        particlesArray.push(new Particle());
+    }
+}
+initParticles();
+
+// Vòng lặp vẽ lại liên tục (60 FPS)
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Đọc màu sắc dựa theo chế độ Sáng/Tối
+    const isLightMode = document.body.classList.contains('light-mode');
+    const r = isLightMode ? 0 : 255;
+    const g = isLightMode ? 0 : 204;
+    const b = isLightMode ? 0 : 0;
+    const baseColor = `rgba(${r}, ${g}, ${b}, 0.8)`;
+
+    for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw(baseColor);
+
+        // 1. Nối các hạt với nhau
+        for (let j = i; j < particlesArray.length; j++) {
+            const dx = particlesArray[i].x - particlesArray[j].x;
+            const dy = particlesArray[i].y - particlesArray[j].y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < connectionDistance) {
+                const opacity = 1 - (distance / connectionDistance);
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity * 0.4})`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
+                ctx.stroke();
+            }
+        }
+
+        // 2. Nối hạt với con trỏ chuột
+        if (!homeSection.classList.contains('hidden') && mouseX > 0 && mouseY > 0) {
+            const dxMouse = particlesArray[i].x - mouseX;
+            const dyMouse = particlesArray[i].y - mouseY;
+            const distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+
+            if (distanceMouse < mouseConnectionDistance) {
+                const opacityMouse = 1 - (distanceMouse / mouseConnectionDistance);
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacityMouse * 0.8})`;
+                ctx.lineWidth = 1.5; // Dây nối với chuột sẽ đậm hơn một chút
+                ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
+                ctx.lineTo(mouseX, mouseY);
+                ctx.stroke();
+            }
+        }
+    }
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// Bật/tắt canvas khi ở trang chủ hoặc đã bấm vào Khám phá
+setInterval(() => {
+    if (!homeSection.classList.contains('hidden')) {
+        canvas.classList.add('active');
+    } else {
+        canvas.classList.remove('active');
+    }
+}, 200);
