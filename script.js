@@ -102,7 +102,7 @@ setTimeout(() => {
             }
         });
     }
-}, 1000);
+}, 100);
 
 function toggleLogin() {
     if (CONFIG.currentUser) {
