@@ -118,10 +118,10 @@ async function khoiTaoDuLieu() {
         addBatch("NV_CO_XUA", "NV Cổ Xưa Tổng Hợp", "NHANVAT/Nhân Vật Cổ Xưa Tổng Hợp", taoDanhSachTuDong(90, "Nhân Vật Cổ Xưa Tổng Hợp ", ".webp", linkMap["Nhân Vật Cổ Xưa Tổng Hợp"]));
 
         // --- MỤC 2: KHUNG CẢNH---
-        addBatch("KC_HIEN_DAI", "KC Thành Phố Hiện Đại", "KHUNGCANH/Khung Cảnh Thành Phố Hiện Đại", taoDanhSachTuDong(352, "Khung Cảnh Thành Phố Hiện Đại ", ".webp", linkMap["Khung Cảnh Thành Phố Hiện Đại"]));
+        addBatch("KC_HIEN_DAI", "KC Thành Phố Hiện Đại", "KHUNGCANH/Khung Cảnh Thành Phố Hiện Đại", taoDanhSachTuDong(514, "Khung Cảnh Thành Phố Hiện Đại ", ".webp", linkMap["Khung Cảnh Thành Phố Hiện Đại"]));
         addBatch("KC_HIEN_DAI", "KC Mùa Đông", "KHUNGCANH/Khung Cảnh Mùa Đông", taoDanhSachTuDong(27, "Khung Cảnh Mùa Đông ", ".webp", linkMap["Khung Cảnh Mùa Đông"]));
         addBatch("KC_HIEN_DAI", "KC Chiến Trường", "KHUNGCANH/Khung Cảnh Chiến Trường", taoDanhSachTuDong(42, "Khung Cảnh Chiến Trường ", ".webp", linkMap["Khung Cảnh Chiến Trường"]));
-        addBatch("KC_HIEN_DAI", "KC Lăng Mộ", "KHUNGCANH/Khung Cảnh Lăng Mộ", taoDanhSachTuDong(20, "Khung Cảnh Lăng Mộ ", ".webp", linkMap["Khung Cảnh Lăng Mộ"]));
+        addBatch("KC_HIEN_DAI", "KC Lăng Mộ", "KHUNGCANH/Khung Cảnh Lăng Mộ", taoDanhSachTuDong(40, "Khung Cảnh Lăng Mộ ", ".webp", linkMap["Khung Cảnh Lăng Mộ"]));
         addBatch("KC_HIEN_DAI", "KC Thành Phố U Ám", "KHUNGCANH/Thành Phố U Ám", taoDanhSachTuDong(40, "Thành Phố U Ám ", ".webp", linkMap["Thành Phố U Ám"]));
         addBatch("KC_HIEN_DAI", "KC Thập Niên 8090", "KHUNGCANH/Khung Cảnh Thập Niên 8090", taoDanhSachTuDong(189, "Khung Cảnh Thập Niên 8090 ", ".webp", linkMap["Khung Cảnh Thập Niên 8090"]));
         addBatch("KC_HIEN_DAI", "KC Ngoài Trời & Bắt Hải Sản", "KHUNGCANH/Ngoài Trời & Bắt Hải Sản", taoDanhSachTuDong(97, "Ngoài Trời & Bắt Hải Sản ", ".webp", linkMap["Ngoài Trời & Bắt Hải Sản"]));
