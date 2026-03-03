@@ -3,7 +3,7 @@
 // 1. CẤU HÌNH (Đã sửa lại đúng tên repo GitHub của bạn)
 const CDN_BASE = "https://cdn.jsdelivr.net/gh/nguyenanimate99-stack/nguyenanimate99-stack.github.io/images/";
 // Link CSV từ Google Sheet của bạn
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSbcaiaDqyptf1IYpiQL3xyp7jhpjbGdH4GRLco7uo-RAKErohJ4xi1Oftoc8qWcPpoZA0R49MKnB59/pub?gid=0&single=true&output=csv";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSP0mliUw3Qh-z27r1YA6y2TsWB7t-Wr0iygTueR6e_LOMLwGM2Ppkl0WOf-uwotz2-RNw8icr2RM6/pub?output=csv";
 
 const ALL_IMAGES = []; // Mảng chứa dữ liệu cuối cùng
 
@@ -98,7 +98,8 @@ async function khoiTaoDuLieu() {
 
         // --- MỤC 1: NHÂN VẬT ---
         addBatch("NV_HIEN_DAI", "NV Hiện Đại", "NHANVAT/Nhân Vật Hiện Đại", taoDanhSachTuDong(120, "Nhân Vật Hiện Đại ", ".webp", linkMap["Nhân Vật Hiện Đại"]));
-        addBatch("NV_HIEN_DAI", "NV Thành Thị", "NHANVAT/Nhân Vật Thành Thị", taoDanhSachTuDong(130, "Nhân Vật Thành Thị ", ".webp", linkMap["Nhân Vật Thành Thị"]));
+        addBatch("NV_HIEN_DAI", "NV Thành Thị", "NHANVAT/Nhân Vật Thành Thị", taoDanhSachTuDong(128, "Nhân Vật Thành Thị ", ".webp", linkMap["Nhân Vật Thành Thị"]));
+        addBatch("NV_HIEN_DAI", "NV Đa Góc Nhìn", "NHANVAT/Nhân Vật Đa Góc Nhìn", taoDanhSachTuDong(0, "Nhân Vật Đa Góc Nhìn ", ".webp", linkMap["Nhân Vật Đa Góc Nhìn"]));
         addBatch("NV_HIEN_DAI", "NV 8090", "NHANVAT/Nhân Vật 8090", taoDanhSachTuDong(56, "Nhân Vật 8090 ", ".webp", linkMap["Nhân Vật 8090"]));
         addBatch("NV_HIEN_DAI", "NV Xã Hội Đen", "NHANVAT/Nhân Vật Xã Hội Đen", taoDanhSachTuDong(29, "Nhân Vật Xã Hội Đen ", ".webp", linkMap["Nhân Vật Xã Hội Đen"]));
         addBatch("NV_HIEN_DAI", "NV Trò Chơi", "NHANVAT/Nhân Vật Trò Chơi", taoDanhSachTuDong(15, "Nhân Vật Trò Chơi ", ".webp", linkMap["Nhân Vật Trò Chơi"]));
@@ -152,7 +153,7 @@ async function khoiTaoDuLieu() {
         
         addBatch("DC_CHU_DE", "DC Mừng Năm Mới", "DAOCU/Đạo Cụ Mừng Năm Mới", taoDanhSachTuDong(21, "Đạo Cụ Mừng Năm Mới ", ".webp", linkMap["Đạo Cụ Mừng Năm Mới"]));
         addBatch("DC_CHU_DE", "DC Thể Thao", "DAOCU/Đạo Cụ Thể Thao", taoDanhSachTuDong(28, "Đạo Cụ Thể Thao ", ".webp", linkMap["Đạo Cụ Thể Thao"]));
-        addBatch("DC_CHU_DE", "DC Âm Nhạc", "DAOCU/Đạo Cụ Âm Nhạc", taoDanhSachTuDong(33, "Đạo Cụ Âm Nhạc ", ".webp", linkMap["Đạo Cụ Âm Nhạc"]));
+        addBatch("DC_CHU_DE", "DC Âm Nhạc", "DAOCU/Đạo Cụ Âm Nhạc", taoDanhSachTuDong(32, "Đạo Cụ Âm Nhạc ", ".webp", linkMap["Đạo Cụ Âm Nhạc"]));
         addBatch("DC_CHU_DE", "DC Câu Cá", "DAOCU/Đạo Cụ Câu Cá", taoDanhSachTuDong(10, "Đạo Cụ Câu Cá ", ".webp", linkMap["Đạo Cụ Câu Cá"]));
         addBatch("DC_CHU_DE", "DC Phương Tiện", "DAOCU/Phương Tiện - Xe", taoDanhSachTuDong(166, "Phương Tiện - Xe ", ".webp", linkMap["Phương Tiện - Xe"]));
         addBatch("DC_CHU_DE", "DC Cổ Đại", "DAOCU/Đạo Cụ Cổ Đại", taoDanhSachTuDong(174, "Đạo Cụ Cổ Đại ", ".webp", linkMap["Đạo Cụ Cổ Đại"]));
