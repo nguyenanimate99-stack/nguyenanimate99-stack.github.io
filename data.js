@@ -50,6 +50,7 @@ const TAG_INFO = {
     "KC Tổng Hợp": { title: "Khung Cảnh <span>Tổng Hợp</span>", link: "https://drive.google.com/drive/folders/1acI94pIPLZ4TD3fJ57T6KeSo_L2LRhu6?usp=drive_link" },
 
     "KC Cổ Xưa": { title: "Khung Cảnh <span>Cổ Xưa</span>", link: "https://drive.google.com/drive/folders/18Moh8BXqdujEB6BMeTCdDvAh_uU9EYRS?usp=drive_link" },
+    "KC Tu Tiên": { title: "Khung Cảnh <span>Tu Tiên</span>", link: "https://drive.google.com/drive/folders/1ft0ryKzTcVsBOHQ39gzfgWWvS7vzzo1-?usp=sharing" },
 
     // --- DỮ LIỆU (MẪU CHUYỂN ĐỘNG) ---
     "MCD Hiện Đại": { title: "Mẫu Chuyển Động <span>Hiện Đại</span>", link: "https://drive.google.com/drive/folders/1uBY2LsXp3VQaBqKCjk9buB4xrIki9jI0?usp=drive_link" },
@@ -58,6 +59,7 @@ const TAG_INFO = {
 
     "MCD Cổ Xưa": { title: "Mẫu Chuyển Động <span>Cổ Xưa</span>", link: "https://drive.google.com/drive/folders/1sLmiJ8yMtdIbaS5tb2Fss8z09-Q1QEl-?usp=drive_link" },
     "MCD Động Vật": { title: "Mẫu Chuyển Động <span>Động Vật</span>", link: "https://drive.google.com/drive/folders/1VLLSDh0qeH4_PoqKHBNeXhgSVs5KSwBq?usp=drive_link" },
+    "MCD Ma Quỷ": { title: "Mẫu Chuyển Động <span>Ma Quỷ</span>", link: "https://drive.google.com/drive/folders/1s7FxvrypOwoU4jl486ixINkYp5uBS6ZK?usp=sharing" },
     "MCD Yêu Tinh": { title: "Mẫu Chuyển Động <span>Yêu Tinh</span>", link: "https://drive.google.com/drive/folders/12OBJRrSQP5v0117ayVxV9jhUl6X-f0KD?usp=drive_link" },
     
     // --- DỮ LIỆU (ĐẠO CỤ) ---
@@ -82,6 +84,9 @@ const TAG_INFO = {
     // --- DỮ LIỆU (HIỆU ỨNG) ---
     "HU Hệ Thống": { title: "Hiệu Ứng <span>Hệ Thống</span>", link: "https://drive.google.com/drive/folders/1JQV1t4G0-gVpuA53IcyoD7BHMcAfQveo?usp=drive_link" },
     "HU Tu Tiên": { title: "Hiệu Ứng <span>Tu Tiên</span>", link: "https://drive.google.com/drive/folders/1nkX4_J4NRygK9WvaB8V1FI_8382xTSag?usp=drive_link" },
+    "HU Kỹ Năng": { title: "Hiệu Ứng <span>Kỹ Năng</span>", link: "https://drive.google.com/drive/folders/1pfV4pAWGu73UScP2Xo-jFk-Kni1vQqRf?usp=sharing" },
+    "HU Kinh Dị": { title: "Hiệu Ứng <span>Kinh Dị</span>", link: "https://drive.google.com/drive/folders/1GqvV5id3kyBIXIdweeFcmA1KDjhYEmhR?usp=sharing" },
+    "HU Thời Tiết": { title: "Hiệu Ứng <span>Thời Tiết</span>", link: "https://drive.google.com/drive/folders/1SDKI1AbWaTUenYnSfmt-CAqTo9c-DsvA?usp=sharing" },
 
     "HU Thông Thường": { title: "Hiệu Ứng <span>Thông Thường</span>", link: "https://drive.google.com/drive/folders/1TSG1uyH8IzjiYkHDJdZE9lG7SJigvuSC?usp=drive_link" },
     "HU Cảm Xúc": { title: "Hiệu Ứng <span>Cảm Xúc</span>", link: "https://drive.google.com/drive/folders/1CBogT_aRntzO4o4aWyTqDuDmqxxofT9c?usp=drive_link" },
@@ -120,16 +125,16 @@ const TAG_LIST = {
     "NV_CO_XUA": ["NV Cổ Xưa", "NV Xưa Cổ Điển", "NV Tu Tiên", "NV Chủ Đề", "NV Ma Quỷ Kinh Dị", "NV Kẻ Trộm Mộ", "NV Hà Nhân", "NV Cổ Xưa Tổng Hợp"],
 
     "KC_HIEN_DAI": ["KC Thành Phố Hiện Đại", "KC Mùa Đông", "KC Chiến Trường", "KC Lăng Mộ", "KC Thành Phố U Ám", "KC Thập Niên 8090", "KC Ngoài Trời & Bắt Hải Sản", "KC Tổng Hợp"],
-    "KC_CO_XUA": ["KC Cổ Xưa"],
+    "KC_CO_XUA": ["KC Cổ Xưa", "KC Tu Tiên"],
     
     "MCD_HIEN_DAI": ["MCD Hiện Đại", "MCD Chiến Trường", "MCD Xác Sống"],
-    "MCD_CO_XUA": ["MCD Cổ Xưa", "MCD Động Vật", "MCD Yêu Tinh"],
+    "MCD_CO_XUA": ["MCD Cổ Xưa", "MCD Động Vật", "MCD Ma Quỷ", "MCD Yêu Tinh"],
 
     "DC_VU_KHI": ["DC Vũ Khí Hiện Đại", "DC Vũ Khí Cổ Đại", "DC Vũ Khí Giả"],
     "DC_HANG_NGAY": ["DC Nhà Bếp", "DC Thức Ăn", "DC Hàng Ngày", "DC Túi Sách", "DC Kính Mắt", "DC Trang Phục"],
     "DC_CHU_DE": ["DC Mừng Năm Mới", "DC Thể Thao", "DC Âm Nhạc", "DC Câu Cá", "DC Phương Tiện", "DC Cổ Đại"],
 
-    "HU_DAC_BIET": ["HU Hệ Thống", "HU Tu Tiên"],
+    "HU_DAC_BIET": ["HU Hệ Thống", "HU Tu Tiên", "HU Kỹ Năng", "HU Kinh Dị", "HU Thời Tiết"],
     "HU_THONG_THUONG": ["HU Thông Thường", "HU Cảm Xúc", "HU Toàn Màn Hình", "HU Tốc Độ Cao"],
 
     "DV_DONG_VAT": ["Bộ Động Vật"],
