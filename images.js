@@ -128,15 +128,17 @@ async function khoiTaoDuLieu() {
         addBatch("KC_HIEN_DAI", "KC Tổng Hợp", "KHUNGCANH/Khung Cảnh Tổng Hợp", taoDanhSachTuDong(212, "Khung Cảnh Tổng Hợp ", ".webp", linkMap["Khung Cảnh Tổng Hợp"]));
 
         addBatch("KC_CO_XUA", "KC Cổ Xưa", "KHUNGCANH/Khung Cảnh Cổ Xưa", taoDanhSachTuDong(307, "Khung Cảnh Cổ Xưa ", ".webp", linkMap["Khung Cảnh Cổ Xưa"]));
+        addBatch("KC_CO_XUA", "KC Tu Tiên", "KHUNGCANH/Khung Cảnh Tu Tiên", taoDanhSachTuDong(72, "Khung Cảnh Tu Tiên ", ".webp", linkMap["Khung Cảnh Tu Tiên"]));
         
         // --- MỤC 3: MẪU CHUYỂN ĐỘNG (Mới thêm - Ví dụ dùng .gif) ---
         // Mục này ảnh gốc đã là .gif nên không cần thêm tham số "true"
         addBatch("MCD_HIEN_DAI", "MCD Hiện Đại", "MAUCHUYENDONG/Mẫu Chuyển Động Hiện Đại", taoDanhSachTuDong(148, "Mẫu Chuyển Động Hiện Đại ", ".gif", linkMap["Mẫu Chuyển Động Hiện Đại"]));
         addBatch("MCD_HIEN_DAI", "MCD Chiến Trường", "MAUCHUYENDONG/Mẫu Chuyển Động Chiến Trường", taoDanhSachTuDong(75, "Mẫu Chuyển Động Chiến Trường ", ".gif", linkMap["Mẫu Chuyển Động Chiến Trường"]));
-        addBatch("MCD_HIEN_DAI", "MCD Xác Sống", "MAUCHUYENDONG/Mẫu Chuyển Động Xác Sống", taoDanhSachTuDong(38, "Mẫu Chuyển Động Xác Sống ", ".gif", linkMap["Mẫu Chuyển Động Xác Sống"]));
+        addBatch("MCD_HIEN_DAI", "MCD Xác Sống", "MAUCHUYENDONG/Mẫu Chuyển Động Xác Sống", taoDanhSachTuDong(61, "Mẫu Chuyển Động Xác Sống ", ".gif", linkMap["Mẫu Chuyển Động Xác Sống"]));
 
         addBatch("MCD_CO_XUA", "MCD Cổ Xưa", "MAUCHUYENDONG/Mẫu Chuyển Động Cổ Xưa", taoDanhSachTuDong(196, "Mẫu Chuyển Động Cổ Xưa ", ".gif", linkMap["Mẫu Chuyển Động Cổ Xưa"]));
         addBatch("MCD_CO_XUA", "MCD Động Vật", "MAUCHUYENDONG/Mẫu Chuyển Động Động Vật", taoDanhSachTuDong(53, "Mẫu Chuyển Động Động Vật ", ".gif", linkMap["Mẫu Chuyển Động Động Vật"]));
+        addBatch("MCD_CO_XUA", "MCD Ma Quỷ", "MAUCHUYENDONG/Mẫu Chuyển Động Ma Quỷ", taoDanhSachTuDong(23, "Mẫu Chuyển Động Ma Quỷ ", ".gif", linkMap["Mẫu Chuyển Động Ma Quỷ"]));
         addBatch("MCD_CO_XUA", "MCD Yêu Tinh", "MAUCHUYENDONG/Mẫu Chuyển Động Yêu Tinh", taoDanhSachTuDong(31, "Mẫu Chuyển Động Yêu Tinh ", ".gif", linkMap["Mẫu Chuyển Động Yêu Tinh"]));
 
         // --- MỤC 4: ĐẠO CỤ ---
@@ -160,7 +162,10 @@ async function khoiTaoDuLieu() {
 
         // --- MỤC 5: HIỆU ỨNG (Mới thêm - Ví dụ dùng .gif) ---
         addBatch("HU_DAC_BIET", "HU Hệ Thống", "HIEUUNG/Hiệu Ứng Hệ Thống", taoDanhSachTuDong(11, "Hiệu Ứng Hệ Thống ", ".gif", linkMap["Hiệu Ứng Hệ Thống"]));
-        addBatch("HU_DAC_BIET", "HU Tu Tiên", "HIEUUNG/Hiệu Ứng Tu Tiên", taoDanhSachTuDong(32, "Hiệu Ứng Tu Tiên ", ".gif", linkMap["Hiệu Ứng Tu Tiên"]));
+        addBatch("HU_DAC_BIET", "HU Tu Tiên", "HIEUUNG/Hiệu Ứng Tu Tiên", taoDanhSachTuDong(42, "Hiệu Ứng Tu Tiên ", ".gif", linkMap["Hiệu Ứng Tu Tiên"]));
+        addBatch("HU_DAC_BIET", "HU Kỹ Năng", "HIEUUNG/Hiệu Ứng Kỹ Năng", taoDanhSachTuDong(26, "Hiệu Ứng Kỹ Năng ", ".gif", linkMap["Hiệu Ứng Kỹ Năng"]));
+        addBatch("HU_DAC_BIET", "HU Kinh Dị", "HIEUUNG/Hiệu Ứng Kinh Dị", taoDanhSachTuDong(13, "Hiệu Ứng Kinh Dị ", ".gif", linkMap["Hiệu Ứng Kinh Dị"]));
+        addBatch("HU_DAC_BIET", "HU Thời Tiết", "HIEUUNG/Hiệu Ứng Thời Tiết", taoDanhSachTuDong(17, "Hiệu Ứng Thời Tiết ", ".gif", linkMap["Hiệu Ứng Thời Tiết"]));
 
         addBatch("HU_THONG_THUONG", "HU Thông Thường", "HIEUUNG/Hiệu Ứng Thông Thường", taoDanhSachTuDong(213, "Hiệu Ứng Thông Thường ", ".gif", linkMap["Hiệu Ứng Thông Thường"]));
         addBatch("HU_THONG_THUONG", "HU Cảm Xúc", "HIEUUNG/Hiệu Ứng Cảm Xúc", taoDanhSachTuDong(40, "Hiệu Ứng Cảm Xúc ", ".gif", linkMap["Hiệu Ứng Cảm Xúc"]));
