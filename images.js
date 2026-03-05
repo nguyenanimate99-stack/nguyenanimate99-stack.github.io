@@ -123,8 +123,10 @@ async function khoiTaoDuLieu() {
         addBatch("KC_HIEN_DAI", "KC Chiến Trường", "KHUNGCANH/Khung Cảnh Chiến Trường", taoDanhSachTuDong(42, "Khung Cảnh Chiến Trường ", ".webp", linkMap["Khung Cảnh Chiến Trường"]));
         addBatch("KC_HIEN_DAI", "KC Lăng Mộ", "KHUNGCANH/Khung Cảnh Lăng Mộ", taoDanhSachTuDong(40, "Khung Cảnh Lăng Mộ ", ".webp", linkMap["Khung Cảnh Lăng Mộ"]));
         addBatch("KC_HIEN_DAI", "KC Thành Phố U Ám", "KHUNGCANH/Thành Phố U Ám", taoDanhSachTuDong(40, "Thành Phố U Ám ", ".webp", linkMap["Thành Phố U Ám"]));
-        addBatch("KC_HIEN_DAI", "KC Thập Niên 8090", "KHUNGCANH/Khung Cảnh Thập Niên 8090", taoDanhSachTuDong(189, "Khung Cảnh Thập Niên 8090 ", ".webp", linkMap["Khung Cảnh Thập Niên 8090"]));
-        addBatch("KC_HIEN_DAI", "KC Ngoài Trời & Bắt Hải Sản", "KHUNGCANH/Ngoài Trời & Bắt Hải Sản", taoDanhSachTuDong(97, "Ngoài Trời & Bắt Hải Sản ", ".webp", linkMap["Ngoài Trời & Bắt Hải Sản"]));
+        addBatch("KC_HIEN_DAI", "KC Thập Niên 8090", "KHUNGCANH/Khung Cảnh Thập Niên 8090", taoDanhSachTuDong(221, "Khung Cảnh Thập Niên 8090 ", ".webp", linkMap["Khung Cảnh Thập Niên 8090"]));
+        addBatch("KC_HIEN_DAI", "KC Trò Chơi", "KHUNGCANH/Khung Cảnh Trò Chơi", taoDanhSachTuDong(18, "Khung Cảnh Trò Chơi ", ".webp", linkMap["Khung Cảnh Trò Chơi"]));
+        addBatch("KC_HIEN_DAI", "KC Tương Lai", "KHUNGCANH/Khung Cảnh Tương Lai", taoDanhSachTuDong(20, "Khung Cảnh Tương Lai ", ".webp", linkMap["Khung Cảnh Tương Lai"]));
+        addBatch("KC_HIEN_DAI", "KC Ngoài Trời & Bắt Hải Sản", "KHUNGCANH/Ngoài Trời & Bắt Hải Sản", taoDanhSachTuDong(117, "Ngoài Trời & Bắt Hải Sản ", ".webp", linkMap["Ngoài Trời & Bắt Hải Sản"]));
         addBatch("KC_HIEN_DAI", "KC Tổng Hợp", "KHUNGCANH/Khung Cảnh Tổng Hợp", taoDanhSachTuDong(212, "Khung Cảnh Tổng Hợp ", ".webp", linkMap["Khung Cảnh Tổng Hợp"]));
 
         addBatch("KC_CO_XUA", "KC Cổ Xưa", "KHUNGCANH/Khung Cảnh Cổ Xưa", taoDanhSachTuDong(307, "Khung Cảnh Cổ Xưa ", ".webp", linkMap["Khung Cảnh Cổ Xưa"]));
@@ -132,14 +134,17 @@ async function khoiTaoDuLieu() {
         
         // --- MỤC 3: MẪU CHUYỂN ĐỘNG (Mới thêm - Ví dụ dùng .gif) ---
         // Mục này ảnh gốc đã là .gif nên không cần thêm tham số "true"
-        addBatch("MCD_HIEN_DAI", "MCD Hiện Đại", "MAUCHUYENDONG/Mẫu Chuyển Động Hiện Đại", taoDanhSachTuDong(148, "Mẫu Chuyển Động Hiện Đại ", ".gif", linkMap["Mẫu Chuyển Động Hiện Đại"]));
+        addBatch("MCD_HIEN_DAI", "MCD Hiện Đại", "MAUCHUYENDONG/Mẫu Chuyển Động Hiện Đại", taoDanhSachTuDong(157, "Mẫu Chuyển Động Hiện Đại ", ".gif", linkMap["Mẫu Chuyển Động Hiện Đại"]));
+        addBatch("MCD_HIEN_DAI", "MCD Phong Cách", "MAUCHUYENDONG/Mẫu Chuyển Động Phong Cách", taoDanhSachTuDong(14, "Mẫu Chuyển Động Phong Cách ", ".gif", linkMap["Mẫu Chuyển Động Phong Cách"]));
+        addBatch("MCD_HIEN_DAI", "MCD 8090", "MAUCHUYENDONG/Mẫu Chuyển Động 8090", taoDanhSachTuDong(45, "Mẫu Chuyển Động 8090 ", ".gif", linkMap["Mẫu Chuyển Động 8090"]));
+        addBatch("MCD_HIEN_DAI", "MCD Trộm Mộ", "MAUCHUYENDONG/Mẫu Chuyển Động Trộm Mộ", taoDanhSachTuDong(8, "Mẫu Chuyển Động Trộm Mộ ", ".gif", linkMap["Mẫu Chuyển Động Trộm Mộ"]));
         addBatch("MCD_HIEN_DAI", "MCD Chiến Trường", "MAUCHUYENDONG/Mẫu Chuyển Động Chiến Trường", taoDanhSachTuDong(75, "Mẫu Chuyển Động Chiến Trường ", ".gif", linkMap["Mẫu Chuyển Động Chiến Trường"]));
         addBatch("MCD_HIEN_DAI", "MCD Xác Sống", "MAUCHUYENDONG/Mẫu Chuyển Động Xác Sống", taoDanhSachTuDong(61, "Mẫu Chuyển Động Xác Sống ", ".gif", linkMap["Mẫu Chuyển Động Xác Sống"]));
 
         addBatch("MCD_CO_XUA", "MCD Cổ Xưa", "MAUCHUYENDONG/Mẫu Chuyển Động Cổ Xưa", taoDanhSachTuDong(196, "Mẫu Chuyển Động Cổ Xưa ", ".gif", linkMap["Mẫu Chuyển Động Cổ Xưa"]));
         addBatch("MCD_CO_XUA", "MCD Động Vật", "MAUCHUYENDONG/Mẫu Chuyển Động Động Vật", taoDanhSachTuDong(53, "Mẫu Chuyển Động Động Vật ", ".gif", linkMap["Mẫu Chuyển Động Động Vật"]));
         addBatch("MCD_CO_XUA", "MCD Ma Quỷ", "MAUCHUYENDONG/Mẫu Chuyển Động Ma Quỷ", taoDanhSachTuDong(23, "Mẫu Chuyển Động Ma Quỷ ", ".gif", linkMap["Mẫu Chuyển Động Ma Quỷ"]));
-        addBatch("MCD_CO_XUA", "MCD Yêu Tinh", "MAUCHUYENDONG/Mẫu Chuyển Động Yêu Tinh", taoDanhSachTuDong(31, "Mẫu Chuyển Động Yêu Tinh ", ".gif", linkMap["Mẫu Chuyển Động Yêu Tinh"]));
+        addBatch("MCD_CO_XUA", "MCD Yêu Tinh", "MAUCHUYENDONG/Mẫu Chuyển Động Yêu Tinh", taoDanhSachTuDong(39, "Mẫu Chuyển Động Yêu Tinh ", ".gif", linkMap["Mẫu Chuyển Động Yêu Tinh"]));
 
         // --- MỤC 4: ĐẠO CỤ ---
         addBatch("DC_VU_KHI", "DC Vũ Khí Hiện Đại", "DAOCU/Đạo Cụ Vũ Khí Hiện Đại", taoDanhSachTuDong(89, "Đạo Cụ Vũ Khí Hiện Đại ", ".webp", linkMap["Đạo Cụ Vũ Khí Hiện Đại"]));
