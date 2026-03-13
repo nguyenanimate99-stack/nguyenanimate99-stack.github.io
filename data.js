@@ -120,7 +120,7 @@ const TAG_INFO = {
 
     "Đạo Cụ Hệ Thống": { title: "Đạo Cụ <span>Hệ Thống</span>", link: "https://drive.google.com/drive/folders/1lqnSlZVoFarpVdwkynxhlO3LHhgyddCD?usp=drive_link" },
 
-    "Động Vật": { title: "Động <span>Vật</span>", link: "" },
+    "Động Vật": { title: "Động <span>Vật</span>", link: "https://drive.google.com/drive/folders/1VuaugYjkLadk5YLqAnSAwC2h9khkgvDZ?usp=sharing" },
 
 };
 
