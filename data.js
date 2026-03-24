@@ -22,7 +22,7 @@ const TAG_INFO = {
     // --- DỮ LIỆU (NHÂN VẬT) ---
     "NV Hiện Đại": { title: "Nhân Vật <span>Hiện Đại </span>", link: "https://drive.google.com/drive/folders/1hYBr09cBjGRn4F20L6T2-86FWj-kpa2U?usp=sharing" },
     "NV Thành Thị": { title: "Nhân Vật <span>Thành Thị</span>", link: "https://drive.google.com/drive/folders/1A8tg-fCKvj8EhGmnaQgzRozjwqEFdEG6?usp=sharing" },
-    "NV Đa Góc Nhìn": { title: "Nhân Vật <span>Đa Góc Nhìn</span>", link: "" },
+    "NV Đa Góc Nhìn": { title: "Nhân Vật <span>Đa Góc Nhìn</span>", link: "https://drive.google.com/drive/folders/1gGnPf9ya8pgilU1W2rtpznoZgmwJounR?usp=sharing" },
     "NV 8090": { title: "Nhân Vật <span>8090</span>", link: "https://drive.google.com/drive/folders/1-v5IeTF9K-51HrfczDfkOm1NNXH1UX9x?usp=drive_link" },
     "NV Xã Hội Đen": { title: "Nhân Vật <span>Xã Hội Đen</span>", link: "https://drive.google.com/drive/folders/1XSMoCThmOtJDCVzm2iZQVfoV5lNNcfX0?usp=drive_link" },
     "NV Trò Chơi": { title: "Nhân Vật <span>Trò Chơi</span>", link: "https://drive.google.com/drive/folders/1NXJKvcVpU7tZdKT1zj6JeDQHxGtKkFEg?usp=drive_link" },
@@ -97,9 +97,8 @@ const TAG_INFO = {
     "HU Cảm Xúc": { title: "Hiệu Ứng <span>Cảm Xúc</span>", link: "https://drive.google.com/drive/folders/1CBogT_aRntzO4o4aWyTqDuDmqxxofT9c?usp=drive_link" },
     "HU Toàn Màn Hình": { title: "Hiệu Ứng <span>Toàn Màn Hình</span>", link: "https://drive.google.com/drive/folders/1voOJbn8KeMGuQgX4QGFHzJz9nt7cf7Jm?usp=drive_link" },
     "HU Tốc Độ Cao": { title: "Hiệu Ứng <span>Tốc Độ Cao</span>", link: "https://drive.google.com/drive/folders/12oam4rE22fzS9yNLmHVFBq9IbQU6YH49?usp=drive_link" },
-    
-
-    
+    "HU Cơ Bản": { title: "Hiệu Ứng <span>Cơ Bản</span>", link: "https://drive.google.com/drive/folders/1lnVYsVtNDGcoBnKAVd4cBHipsJkU4okv?usp=sharing" },
+        
     // --- DỮ LIỆU (ĐỘNG VẬT) ---
     "Bộ Động Vật": { title: "Bộ <span>Động Vật</span>", link: "https://drive.google.com/drive/folders/1PNLXq2zTzPrWq61Ff6tHn6jBDIqnxnDd?usp=drive_link" },
 
@@ -140,7 +139,7 @@ const TAG_LIST = {
     "DC_CHU_DE": ["DC Mừng Năm Mới", "DC Thể Thao", "DC Âm Nhạc", "DC Câu Cá", "DC Phương Tiện", "DC Cổ Đại"],
 
     "HU_DAC_BIET": ["HU Hệ Thống", "HU Tu Tiên", "HU Kỹ Năng", "HU Kinh Dị", "HU Thời Tiết"],
-    "HU_THONG_THUONG": ["HU Thông Thường", "HU Cảm Xúc", "HU Toàn Màn Hình", "HU Tốc Độ Cao"],
+    "HU_THONG_THUONG": ["HU Thông Thường", "HU Cảm Xúc", "HU Toàn Màn Hình", "HU Tốc Độ Cao", "HU Cơ Bản"],
 
     "DV_DONG_VAT": ["Bộ Động Vật"],
     "DV_QUAI_VAT": ["Bộ Quái Vật"],
