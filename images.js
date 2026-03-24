@@ -1,7 +1,11 @@
 /* --- images.js --- */
 
 // 1. CẤU HÌNH (Đã sửa lại đúng tên repo GitHub của bạn)
+// Kho 1 (Mặc định)
 const CDN_BASE = "https://cdn.jsdelivr.net/gh/nguyenanimate99-stack/nguyenanimate99-stack.github.io/images/";
+// Kho 2 (Kho mới thêm)
+const CDN_BASE_2 = "https://cdn.jsdelivr.net/gh/nguyenanimate99-stack/nguyen-animate/";
+
 // Link CSV từ Google Sheet của bạn
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTSP0mliUw3Qh-z27r1YA6y2TsWB7t-Wr0iygTueR6e_LOMLwGM2Ppkl0WOf-uwotz2-RNw8icr2RM6/pub?output=csv";
 
@@ -11,9 +15,12 @@ const ALL_IMAGES = []; // Mảng chứa dữ liệu cuối cùng
 // 2. CÁC HÀM HỖ TRỢ
 // =================================================================
 
-// Hàm thêm ảnh vào hệ thống
-function addBatch(tab, tag, folderPath, listImages) {
-    let currentPath = CDN_BASE + folderPath + "/";
+// Hàm thêm ảnh vào hệ thống (Đã thêm tham số repo = 1 ở cuối)
+function addBatch(tab, tag, folderPath, listImages, repo = 1) {
+    // Nếu repo = 2 thì dùng link kho 2, ngược lại dùng kho 1
+    let baseCdn = (repo === 2) ? CDN_BASE_2 : CDN_BASE;
+    let currentPath = baseCdn + folderPath + "/";
+    
     listImages.forEach(item => {
         ALL_IMAGES.push({
             id: item[0],
@@ -29,10 +36,12 @@ function addBatch(tab, tag, folderPath, listImages) {
     });
 }
 
-// Hàm tạo danh sách (Đã nâng cấp: Thêm tham số coGif để tự tạo link ảnh .gif)
-function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRieng = [], coGif = false) {
+// Hàm tạo danh sách (Đã nâng cấp: Thêm tham số batDauTu = 1)
+function taoDanhSachTuDong(soLuong, tenDau, duoiFile = ".webp", danhSachLinkRieng = [], coGif = false, batDauTu = 1) {
     let list = [];
-    for (let i = 1; i <= soLuong; i++) {
+    let ketThuc = batDauTu + soLuong - 1;
+
+    for (let i = batDauTu; i <= ketThuc; i++) {
         // Lấy link từ mảng Sheet (nếu có và mảng không rỗng)
         let link = "";
         if (danhSachLinkRieng && danhSachLinkRieng.length > 0 && danhSachLinkRieng[i - 1]) {
@@ -97,9 +106,10 @@ async function khoiTaoDuLieu() {
         // =========================================================
 
         // --- MỤC 1: NHÂN VẬT ---
+        // Các dòng này dùng kho 1 (mặc định) vì không điền tham số cuối
         addBatch("NV_HIEN_DAI", "NV Hiện Đại", "NHANVAT/Nhân Vật Hiện Đại", taoDanhSachTuDong(120, "Nhân Vật Hiện Đại ", ".webp", linkMap["Nhân Vật Hiện Đại"]));
         addBatch("NV_HIEN_DAI", "NV Thành Thị", "NHANVAT/Nhân Vật Thành Thị", taoDanhSachTuDong(128, "Nhân Vật Thành Thị ", ".webp", linkMap["Nhân Vật Thành Thị"]));
-        addBatch("NV_HIEN_DAI", "NV Đa Góc Nhìn", "NHANVAT/Nhân Vật Đa Góc Nhìn", taoDanhSachTuDong(0, "Nhân Vật Đa Góc Nhìn ", ".webp", linkMap["Nhân Vật Đa Góc Nhìn"]));
+        addBatch("NV_HIEN_DAI", "NV Đa Góc Nhìn", "NHANVAT/Nhân Vật Đa Góc Nhìn", taoDanhSachTuDong(4, "Nhân Vật Đa Góc Nhìn ", ".webp", linkMap["Nhân Vật Đa Góc Nhìn"]));
         addBatch("NV_HIEN_DAI", "NV 8090", "NHANVAT/Nhân Vật 8090", taoDanhSachTuDong(56, "Nhân Vật 8090 ", ".webp", linkMap["Nhân Vật 8090"]));
         addBatch("NV_HIEN_DAI", "NV Xã Hội Đen", "NHANVAT/Nhân Vật Xã Hội Đen", taoDanhSachTuDong(29, "Nhân Vật Xã Hội Đen ", ".webp", linkMap["Nhân Vật Xã Hội Đen"]));
         addBatch("NV_HIEN_DAI", "NV Trò Chơi", "NHANVAT/Nhân Vật Trò Chơi", taoDanhSachTuDong(15, "Nhân Vật Trò Chơi ", ".webp", linkMap["Nhân Vật Trò Chơi"]));
@@ -165,7 +175,7 @@ async function khoiTaoDuLieu() {
         addBatch("DC_CHU_DE", "DC Phương Tiện", "DAOCU/Phương Tiện - Xe", taoDanhSachTuDong(166, "Phương Tiện - Xe ", ".webp", linkMap["Phương Tiện - Xe"]));
         addBatch("DC_CHU_DE", "DC Cổ Đại", "DAOCU/Đạo Cụ Cổ Đại", taoDanhSachTuDong(174, "Đạo Cụ Cổ Đại ", ".webp", linkMap["Đạo Cụ Cổ Đại"]));
 
-        // --- MỤC 5: HIỆU ỨNG (Mới thêm - Ví dụ dùng .gif) ---
+        // --- MỤC 5: HIỆU ỨNG (Mới thêm - Ví dụ dùng .gif) thêm lia chuột và kho 2---], true), 2);---]), 2);
         addBatch("HU_DAC_BIET", "HU Hệ Thống", "HIEUUNG/Hiệu Ứng Hệ Thống", taoDanhSachTuDong(11, "Hiệu Ứng Hệ Thống ", ".gif", linkMap["Hiệu Ứng Hệ Thống"]));
         addBatch("HU_DAC_BIET", "HU Tu Tiên", "HIEUUNG/Hiệu Ứng Tu Tiên", taoDanhSachTuDong(42, "Hiệu Ứng Tu Tiên ", ".gif", linkMap["Hiệu Ứng Tu Tiên"]));
         addBatch("HU_DAC_BIET", "HU Kỹ Năng", "HIEUUNG/Hiệu Ứng Kỹ Năng", taoDanhSachTuDong(26, "Hiệu Ứng Kỹ Năng ", ".gif", linkMap["Hiệu Ứng Kỹ Năng"]));
@@ -176,6 +186,8 @@ async function khoiTaoDuLieu() {
         addBatch("HU_THONG_THUONG", "HU Cảm Xúc", "HIEUUNG/Hiệu Ứng Cảm Xúc", taoDanhSachTuDong(40, "Hiệu Ứng Cảm Xúc ", ".gif", linkMap["Hiệu Ứng Cảm Xúc"]));
         addBatch("HU_THONG_THUONG", "HU Toàn Màn Hình", "HIEUUNG/Hiệu Ứng Toàn Màn Hình", taoDanhSachTuDong(71, "Hiệu Ứng Toàn Màn Hình ", ".gif", linkMap["Hiệu Ứng Toàn Màn Hình"]));
         addBatch("HU_THONG_THUONG", "HU Tốc Độ Cao", "HIEUUNG/Hiệu Ứng Tốc Độ Cao", taoDanhSachTuDong(23, "Hiệu Ứng Tốc Độ Cao ", ".gif", linkMap["Hiệu Ứng Tốc Độ Cao"]));
+        addBatch("HU_THONG_THUONG", "HU Cơ Bản", "HIEUUNG/Hiệu Ứng Cơ Bản", taoDanhSachTuDong(500, "Hiệu Ứng Cơ Bản ", ".webp", linkMap["Hiệu Ứng Cơ Bản"], true), 2);
+        addBatch("HU_THONG_THUONG", "HU Cơ Bản", "HIEUUNG/Hiệu Ứng Cơ Bản2", taoDanhSachTuDong(297, "Hiệu Ứng Cơ Bản ", ".webp", linkMap["Hiệu Ứng Cơ Bản"], true, 501), 2);   
 
         // --- MỤC 6: ĐỘNG VẬT (Mới thêm - Ví dụ dùng .gif) ---
         addBatch("DV_DONG_VAT", "Bộ Động Vật", "DONGVAT/Bộ Động Vật", taoDanhSachTuDong(60, "Bộ Động Vật ", ".webp", linkMap["Bộ Động Vật"]));
