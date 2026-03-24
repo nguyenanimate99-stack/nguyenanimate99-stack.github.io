@@ -102,7 +102,7 @@ setTimeout(() => {
             }
         });
     }
-}, 50);
+}, 300);
 
 function toggleLogin() {
     if (CONFIG.currentUser) {
@@ -585,4 +585,3 @@ setInterval(() => {
         canvas.classList.remove('active');
     }
 }, 200);
-
