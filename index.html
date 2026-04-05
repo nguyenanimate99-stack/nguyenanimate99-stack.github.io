@@ -114,9 +114,11 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        // --- THÊM MỚI: Import thư viện Firestore ---
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Thông tin từ ảnh bạn gửi
-       const firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyC-PjBKsYMgFg9CMP87t_02dZ8pVpo4Uus",
             authDomain: "nguyen-animate-web.firebaseapp.com",
             projectId: "nguyen-animate-web",
@@ -125,9 +127,13 @@
             appId: "1:133159757958:web:98ba5a7173c92d319c8907",
             measurementId: "G-B6V37BE0J1"
         };
+        
         // Khởi tạo Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        
+        // --- THÊM MỚI: Khởi tạo Firestore ---
+        const db = getFirestore(app);
 
         // Xuất ra window để script.js dùng được
         window.firebaseLibs = { 
@@ -135,7 +141,12 @@
             signInWithPopup, 
             GoogleAuthProvider, 
             signOut,
-            onAuthStateChanged 
+            onAuthStateChanged,
+            // --- THÊM MỚI: Xuất các hàm Firestore ---
+            db,
+            collection,
+            addDoc,
+            serverTimestamp
         };
         
         console.log("Firebase đã kết nối!");
