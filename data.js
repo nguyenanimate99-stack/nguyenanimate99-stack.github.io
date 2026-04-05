@@ -80,6 +80,7 @@ const TAG_INFO = {
     "DC Trang Phục": { title: "Đạo Cụ <span>Trang Phục</span>", link: "https://drive.google.com/drive/folders/1pNA0AqVnwMW7PbE-VmiVRyc4_JhkHlkG?usp=drive_link" },
 
     "DC Mừng Năm Mới": { title: "Đạo Cụ <span>Mừng Năm Mới</span>", link: "https://drive.google.com/drive/folders/181os4TaNmGmirqtwzp6LE46ShFUdUypb?usp=drive_link" },
+    "DC Tâm Linh": { title: "Đạo Cụ <span>Tâm Linh</span>", link: "https://drive.google.com/drive/folders/1dzZ8W8kDhKt9AJ_2Wu4VqkCQiMaJVhUe?usp=sharing" },
     "DC Thể Thao": { title: "Đạo Cụ <span>Thể Thao</span>", link: "https://drive.google.com/drive/folders/1C3vmkCLScfh_PyWTK-T0jsZvWiK5itj1?usp=drive_link" },
     "DC Âm Nhạc": { title: "Đạo Cụ <span>Âm Nhạc</span>", link: "https://drive.google.com/drive/folders/1up9TifczXkvyvPTg_HU5zcvKIFaNowc3?usp=drive_link" },
     "DC Câu Cá": { title: "Đạo Cụ <span>Câu Cá</span>", link: "https://drive.google.com/drive/folders/1NndZ5LRgPWzZU5A0hoMg5wsQ1uJd5NPU?usp=drive_link" },
@@ -110,6 +111,8 @@ const TAG_INFO = {
     "BC Người Lớn Tuổi": { title: "Biểu Cảm <span>Người Lớn Tuổi</span>", link: "https://drive.google.com/drive/folders/1hlvHAGylBrXhKkStkiz3rr6tNqjX_zIW?usp=drive_link" },
     "BC Khác": { title: "Biểu Cảm <span>Khác</span>", link: "https://drive.google.com/drive/folders/17eokW0gXP0rXJtVhdZMi-yy88DngmAVH?usp=drive_link" },
 
+    "VL Bàn Tay": { title: "Vật Liệu <span>Bàn Tay</span>", link: "https://drive.google.com/drive/folders/1t8q0cO4-aC966ZE364qp3OvwK2HV-Uet?usp=sharing" },
+
     // --- DỮ LIỆU (VẬT LIỆU MIỄN PHÍ) ---
     "Nhân Vật Đời Sống": { title: "NHÂN VẬT <span>Đời Sống</span>", link: "https://drive.google.com/drive/folders/10S5b8JduSq6XS3KmwryX7niNkyEdfIUH?usp=drive_link" },
 
@@ -136,7 +139,7 @@ const TAG_LIST = {
 
     "DC_VU_KHI": ["DC Vũ Khí Hiện Đại", "DC Vũ Khí Cổ Đại", "DC Vũ Khí Giả"],
     "DC_HANG_NGAY": ["DC Nhà Bếp", "DC Thức Ăn", "DC Hàng Ngày", "DC Túi Sách", "DC Kính Mắt", "DC Trang Phục"],
-    "DC_CHU_DE": ["DC Mừng Năm Mới", "DC Thể Thao", "DC Âm Nhạc", "DC Câu Cá", "DC Phương Tiện", "DC Cổ Đại"],
+    "DC_CHU_DE": ["DC Mừng Năm Mới", "DC Tâm Linh", "DC Thể Thao", "DC Âm Nhạc", "DC Câu Cá", "DC Phương Tiện", "DC Cổ Đại"],
 
     "HU_DAC_BIET": ["HU Hệ Thống", "HU Tu Tiên", "HU Kỹ Năng", "HU Kinh Dị", "HU Thời Tiết"],
     "HU_THONG_THUONG": ["HU Thông Thường", "HU Cảm Xúc", "HU Toàn Màn Hình", "HU Tốc Độ Cao", "HU Cơ Bản"],
@@ -145,7 +148,7 @@ const TAG_LIST = {
     "DV_QUAI_VAT": ["Bộ Quái Vật"],
 
     "BIEU_CAM": ["BC Chàng Trai", "BC Nữ", "BC Người Lớn Tuổi", "BC Khác"],
-    "CU_CHI": ["cu chi"],
+    "CU_CHI": ["VL Bàn Tay"],
 
     "NHAN_VAT": ["Nhân Vật Đời Sống"],
     "KHUNG_CANH": ["Khung Cảnh Hiện Đại", "Khung Cảnh Ngoài Trời", "Khung Cảnh Cổ Đại"],
