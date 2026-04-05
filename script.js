@@ -28,7 +28,7 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.style.animation = "fadeOut 0.5s forwards";
         setTimeout(() => toast.remove(), 500);
-    }, 1000);
+    }, 3000);
 }
 
 // Hàm hiện hộp thoại xác nhận (thay cho confirm)
@@ -174,7 +174,29 @@ function handleLogout() {
     }
 }
 
-// --- 3. LOGIC TẢI XUỐNG ---
+// --- 3. LOGIC TẢI XUỐNG VÀ LƯU LỊCH SỬ ---
+
+// Hàm lưu lịch sử tải xuống lên Firebase Firestore
+async function trackUserDownload(fileName, fileLink) {
+    if (!CONFIG.currentUser || !window.firebaseLibs || !window.firebaseLibs.db) return;
+
+    const { db, collection, addDoc, serverTimestamp } = window.firebaseLibs;
+    const user = CONFIG.currentUser;
+
+    try {
+        await addDoc(collection(db, "download_history"), {
+            uid: user.uid,
+            userName: user.displayName,
+            userEmail: user.email,
+            fileName: fileName,
+            fileLink: fileLink,
+            downloadedAt: serverTimestamp()
+        });
+        console.log("Đã ghi nhận lịch sử tải file:", fileName);
+    } catch (error) {
+        console.error("Lỗi khi lưu lịch sử tải:", error);
+    }
+}
 
 function updateDownloadButton() {
     const btn = document.getElementById('download-btn');
@@ -189,6 +211,20 @@ function updateDownloadButton() {
     }
 }
 
+// Hàm tải file ẩn ngay trên trang (dành cho tải từng file trực tiếp)
+function downloadInPage(url) {
+    showToast("Đang kiểm Tra Quyền Của Bạn...", "success");
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = url;
+    document.body.appendChild(iframe);
+    
+    // Xóa iframe sau 10 giây để tránh rác DOM
+    setTimeout(() => {
+        document.body.removeChild(iframe);
+    }, 10000);
+}
+
 function handleDownload() {
     const user = CONFIG.currentUser;
     if (!user) {
@@ -198,6 +234,10 @@ function handleDownload() {
     }
 
     if (CONFIG.currentLink && CONFIG.currentLink !== "#") {
+        // Lưu lịch sử tải toàn bộ
+        trackUserDownload("Tải toàn bộ mục: " + CONFIG.currentCategory, CONFIG.currentLink);
+        
+        // GIỮ NGUYÊN MỞ TAB MỚI CHO GOOGLE DRIVE ĐỂ CHỌN FILE
         window.open(CONFIG.currentLink, '_blank');
     } else {
         showToast("Mục này chưa có link tải chung. Hãy chọn từng ảnh!", "error");
@@ -217,8 +257,12 @@ function handleCardClick(item) {
         return;
     }
 
+    // Lưu lịch sử tải từng ảnh
+    trackUserDownload(item.title, item.driveLink);
+
     const directLink = convertToDirectLink(item.driveLink);
-    window.open(directLink, '_blank');
+    // DÙNG IFRAME ẨN ĐỂ TẢI TRỰC TIẾP KHÔNG MỞ TAB MỚI
+    downloadInPage(directLink);
 }
 
 // --- CÁC HÀM GIAO DIỆN (GIỮ NGUYÊN) ---
