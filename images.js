@@ -130,7 +130,7 @@ async function khoiTaoDuLieu() {
         // --- MỤC 2: KHUNG CẢNH---
         addBatch("KC_HIEN_DAI", "KC Thành Phố Hiện Đại", "KHUNGCANH/Khung Cảnh Thành Phố Hiện Đại", taoDanhSachTuDong(514, "Khung Cảnh Thành Phố Hiện Đại ", ".webp", linkMap["Khung Cảnh Thành Phố Hiện Đại"]));
         addBatch("KC_HIEN_DAI", "KC Mùa Đông", "KHUNGCANH/Khung Cảnh Mùa Đông", taoDanhSachTuDong(27, "Khung Cảnh Mùa Đông ", ".webp", linkMap["Khung Cảnh Mùa Đông"]));
-        addBatch("KC_HIEN_DAI", "KC Chiến Trường", "KHUNGCANH/Khung Cảnh Chiến Trường", taoDanhSachTuDong(49, "Khung Cảnh Chiến Trường ", ".webp", linkMap["Khung Cảnh Chiến Trường"]));
+        addBatch("KC_HIEN_DAI", "KC Chiến Trường", "KHUNGCANH/Khung Cảnh Chiến Trường", taoDanhSachTuDong(61, "Khung Cảnh Chiến Trường ", ".webp", linkMap["Khung Cảnh Chiến Trường"]));
         addBatch("KC_HIEN_DAI", "KC Lăng Mộ", "KHUNGCANH/Khung Cảnh Lăng Mộ", taoDanhSachTuDong(40, "Khung Cảnh Lăng Mộ ", ".webp", linkMap["Khung Cảnh Lăng Mộ"]));
         addBatch("KC_HIEN_DAI", "KC Thành Phố U Ám", "KHUNGCANH/Thành Phố U Ám", taoDanhSachTuDong(40, "Thành Phố U Ám ", ".webp", linkMap["Thành Phố U Ám"]));
         addBatch("KC_HIEN_DAI", "KC Thập Niên 8090", "KHUNGCANH/Khung Cảnh Thập Niên 8090", taoDanhSachTuDong(221, "Khung Cảnh Thập Niên 8090 ", ".webp", linkMap["Khung Cảnh Thập Niên 8090"]));
@@ -158,7 +158,7 @@ async function khoiTaoDuLieu() {
 
         // --- MỤC 4: ĐẠO CỤ ---
         addBatch("DC_VU_KHI", "DC Vũ Khí Hiện Đại", "DAOCU/Đạo Cụ Vũ Khí Hiện Đại", taoDanhSachTuDong(89, "Đạo Cụ Vũ Khí Hiện Đại ", ".webp", linkMap["Đạo Cụ Vũ Khí Hiện Đại"]));
-        addBatch("DC_VU_KHI", "DC Vũ Khí Cổ Đại", "DAOCU/Đạo Cụ Vũ Khí Cổ Đại", taoDanhSachTuDong(81, "Đạo Cụ Vũ Khí Cổ Đại ", ".webp", linkMap["Đạo Cụ Vũ Khí Cổ Đại"]));
+        addBatch("DC_VU_KHI", "DC Vũ Khí Cổ Đại", "DAOCU/Đạo Cụ Vũ Khí Cổ Đại", taoDanhSachTuDong(96, "Đạo Cụ Vũ Khí Cổ Đại ", ".webp", linkMap["Đạo Cụ Vũ Khí Cổ Đại"]));
         addBatch("DC_VU_KHI", "DC Vũ Khí Giả", "DAOCU/Đạo Cụ Vũ Khí Giả", taoDanhSachTuDong(25, "Đạo Cụ Vũ Khí Giả ", ".webp", linkMap["Đạo Cụ Vũ Khí Giả"]));
 
         addBatch("DC_HANG_NGAY", "DC Nhà Bếp", "DAOCU/Đạo Cụ Nhà Bếp", taoDanhSachTuDong(77, "Đạo Cụ Nhà Bếp ", ".webp", linkMap["Đạo Cụ Nhà Bếp"]));
@@ -169,11 +169,12 @@ async function khoiTaoDuLieu() {
         addBatch("DC_HANG_NGAY", "DC Trang Phục", "DAOCU/Đạo Cụ Trang Phục", taoDanhSachTuDong(17, "Đạo Cụ Trang Phục ", ".webp", linkMap["Đạo Cụ Trang Phục"]));
         
         addBatch("DC_CHU_DE", "DC Mừng Năm Mới", "DAOCU/Đạo Cụ Mừng Năm Mới", taoDanhSachTuDong(21, "Đạo Cụ Mừng Năm Mới ", ".webp", linkMap["Đạo Cụ Mừng Năm Mới"]));
+        addBatch("DC_CHU_DE", "DC Tâm Linh", "DAOCU/Đạo Cụ Tâm Linh", taoDanhSachTuDong(18, "Đạo Cụ Tâm Linh ", ".webp", linkMap["Đạo Cụ Tâm Linh"]));
         addBatch("DC_CHU_DE", "DC Thể Thao", "DAOCU/Đạo Cụ Thể Thao", taoDanhSachTuDong(28, "Đạo Cụ Thể Thao ", ".webp", linkMap["Đạo Cụ Thể Thao"]));
         addBatch("DC_CHU_DE", "DC Âm Nhạc", "DAOCU/Đạo Cụ Âm Nhạc", taoDanhSachTuDong(32, "Đạo Cụ Âm Nhạc ", ".webp", linkMap["Đạo Cụ Âm Nhạc"]));
         addBatch("DC_CHU_DE", "DC Câu Cá", "DAOCU/Đạo Cụ Câu Cá", taoDanhSachTuDong(10, "Đạo Cụ Câu Cá ", ".webp", linkMap["Đạo Cụ Câu Cá"]));
         addBatch("DC_CHU_DE", "DC Phương Tiện", "DAOCU/Phương Tiện - Xe", taoDanhSachTuDong(166, "Phương Tiện - Xe ", ".webp", linkMap["Phương Tiện - Xe"]));
-        addBatch("DC_CHU_DE", "DC Cổ Đại", "DAOCU/Đạo Cụ Cổ Đại", taoDanhSachTuDong(174, "Đạo Cụ Cổ Đại ", ".webp", linkMap["Đạo Cụ Cổ Đại"]));
+        addBatch("DC_CHU_DE", "DC Cổ Đại", "DAOCU/Đạo Cụ Cổ Đại", taoDanhSachTuDong(198, "Đạo Cụ Cổ Đại ", ".webp", linkMap["Đạo Cụ Cổ Đại"]));
 
         // --- MỤC 5: HIỆU ỨNG (Mới thêm - Ví dụ dùng .gif) thêm lia chuột và kho 2---], true), 2);---]), 2);
         addBatch("HU_DAC_BIET", "HU Hệ Thống", "HIEUUNG/Hiệu Ứng Hệ Thống", taoDanhSachTuDong(11, "Hiệu Ứng Hệ Thống ", ".gif", linkMap["Hiệu Ứng Hệ Thống"]));
@@ -198,6 +199,8 @@ async function khoiTaoDuLieu() {
         addBatch("BIEU_CAM", "BC Nữ", "BIEUCAM&CUCHI/Biểu Cảm Nữ", taoDanhSachTuDong(11, "Biểu Cảm Nữ ", ".gif", linkMap["Biểu Cảm Nữ"]));
         addBatch("BIEU_CAM", "BC Người Lớn Tuổi", "BIEUCAM&CUCHI/Biểu Cảm Người Lớn Tuổi", taoDanhSachTuDong(4, "Biểu Cảm Người Lớn Tuổi ", ".gif", linkMap["Biểu Cảm Người Lớn Tuổi"]));
         addBatch("BIEU_CAM", "BC Khác", "BIEUCAM&CUCHI/Biểu Cảm Khác", taoDanhSachTuDong(5, "Biểu Cảm Khác ", ".gif", linkMap["Biểu Cảm Khác"]));
+
+        addBatch("CU_CHI", "VL Bàn Tay", "BIEUCAM&CUCHI/Vật Liệu Bàn Tay", taoDanhSachTuDong(31, "Vật Liệu Bàn Tay ", ".webp", linkMap["Vật Liệu Bàn Tay"]));
 
         // --- MỤC 8: VẬT LIỆU MIỄN PHÍ (Mới thêm - Ví dụ dùng .gif) ---
         addBatch("NHAN_VAT", "Nhân Vật Đời Sống", "VATLIEUMIENPHI/Nhân Vật Đời Sống", taoDanhSachTuDong(72, "Nhân Vật Đời Sống ", ".webp", linkMap["Nhân Vật Đời Sống"]));
