@@ -22,7 +22,7 @@ body.light-mode {
     --text-color: #000000;        
     --accent-color: #fc9905;      
     --gray-text: #000000;         
-    --card-bg: #868585;           
+    --card-bg: #f7f2f2;           
     --card-border: #000000;       
     --shadow: rgba(0,0,0,0.15);   
     --download-btn-bg: #000000;   
@@ -162,7 +162,7 @@ nav {
 }
 .page-btn:hover, .page-btn.active { background: var(--accent-color); color: black; font-weight: bold; border-color: var(--accent-color); box-shadow: 0 0 10px rgba(255, 204, 0, 0.4); transform: translateY(-2px); }
 
-/* MEDIA QUERIES GỐC (GIỮ NGUYÊN) */
+/* MEDIA QUERIES GỐC */
 @media (max-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } nav { min-width: auto; width: 95%; } }
 @media (max-width: 900px) { 
     .grid { grid-template-columns: repeat(3, 1fr); } 
@@ -191,6 +191,103 @@ nav {
 .explore-btn:hover { 
     transform: scale(1.1); background: var(--accent-color); color: #000; 
     box-shadow: 0 0 30px var(--accent-color);
+}
+
+/* --- NÚT THÔNG BÁO VÀ TRANG THÔNG BÁO --- */
+.floating-noti-btn {
+    position: fixed !important; 
+    bottom: 80px !important; 
+    right: 40px !important;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    border: 2px solid var(--accent-color);
+    color: var(--text-color);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    box-shadow: 0 4px 15px var(--shadow);
+    transition: all 0.3s ease;
+}
+.floating-noti-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--accent-color);
+    background-color: var(--accent-color);
+    color: #000;
+}
+.noti-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff3333;
+    color: white;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--bg-color);
+    animation: pulseBadge 1.5s infinite;
+}
+@keyframes pulseBadge {
+    0% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 51, 51, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+}
+
+.noti-list {
+    max-width: 650px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    text-align: left;
+    z-index: 20;
+}
+.noti-item {
+    background: var(--card-bg);
+    padding: 20px 25px;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+    text-shadow: none !important; 
+}
+
+/* Định dạng riêng cho bảng thông báo ở chế độ Sáng */
+body.light-mode .noti-item {
+    background: #fcfafa;
+    border-color: #b9b9b4; 
+}
+body.light-mode .noti-item h3,
+body.light-mode .noti-item p {
+    color: #050505; 
+}
+
+.noti-item:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
+    transform: translateY(-3px);
+}
+.noti-item h3 {
+    color: var(--text-color);
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.noti-item p {
+    color: var(--gray-text);
+    font-size: 14px;
+    line-height: 1.6;
 }
 
 /* 2. CÔNG CỤ ẨN HIỆN */
@@ -293,10 +390,9 @@ nav {
 .btn-ok { background: var(--accent-color); color: #000; }
 .btn-ok:hover { box-shadow: 0 0 15px var(--accent-color); transform: translateY(-2px); }
 
-/* --- MOBILE OPTIMIZATION (ĐÃ CHỈNH MÀU CHUẨN CODE GỐC) --- */
+/* --- MOBILE OPTIMIZATION --- */
 
 @media (max-width: 1024px) {
-    /* Full màn hình cho nav trên tablet/mobile */
     nav {
         min-width: unset; width: 100%; max-width: 100%;
         top: 0; left: 0; transform: none;
@@ -307,10 +403,18 @@ nav {
         backdrop-filter: blur(10px);
     }
     .container { margin-top: 140px; padding: 0 10px; }
+    
+    .floating-noti-btn { 
+        position: fixed !important; 
+        bottom: 60px !important; 
+        right: 20px !important; 
+        width: 50px; 
+        height: 50px; 
+        font-size: 20px; 
+    } 
 }
 
 @media (max-width: 768px) {
-    /* Layout Mobile */
     nav {
         display: grid;
         grid-template-columns: auto 1fr auto; 
@@ -323,33 +427,28 @@ nav {
         justify-content: flex-start; 
     }
     
-    /* --- SỬA MÀU MENU CHUẨN PC CHO MOBILE --- */
     .nav-item {
         font-size: 12px; padding: 8px 12px; border-radius: 20px;
-        background: transparent; /* Nền trong suốt khi chưa chọn */
+        background: transparent; 
         color: var(--gray-text);
         border: 1px solid transparent;
     }
     .nav-item.active {
-        /* BẮT BUỘC dùng màu nền active của PC (Màu đen ở darkmode) */
         background-color: var(--nav-active-bg) !important; 
         color: var(--text-color) !important;
         font-weight: 700;
         border: 1px solid var(--card-border);
     }
 
-    /* Grid 2 cột */
     .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .card { border-radius: 8px; }
 
-    /* Sửa bóng chữ dùng biến màu gốc */
     .card-label {
         font-size: 12px; top: 10px; left: 10px;
         background: none; padding: 0;
         max-width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
-    /* Scroll bar ẩn */
     .category-tabs { gap: 15px; overflow-x: auto; justify-content: flex-start; padding-bottom: 5px; margin-bottom: 15px; }
     .category-tabs::-webkit-scrollbar { display: none; }
     .tab-btn { font-size: 14px; flex-shrink: 0; }
@@ -365,7 +464,6 @@ nav {
     .header-section { margin-bottom: 20px; }
     .back-btn { position: relative; top: auto; left: auto; transform: none; display: inline-block; margin-bottom: 10px; padding: 5px 10px; }
 
-    /* --- SỬA LỖI PHÂN TRANG BỊ KHUẤT TRÊN MOBILE --- */
     .pagination {
         width: 100%;
         overflow-x: auto;
@@ -376,11 +474,12 @@ nav {
     .pagination::-webkit-scrollbar { display: none; }
     .page-btn { flex-shrink: 0; }
 }
+
 /* =========================================
    HIỆU ỨNG TƯƠNG TÁC (MENU, GLOW & LƯỚI HẠT)
 ========================================= */
 
-#home-section {
+#home-section, #notification-section {
     position: relative;
     z-index: 10;
 }
@@ -388,10 +487,9 @@ nav {
 .home-container > * {
     position: relative;
     z-index: 20;
-    text-shadow: 0 2px 10px var(--bg-color); /* Chữ rõ ràng hơn */
+    text-shadow: 0 2px 10px var(--bg-color); 
 }
 
-/* --- 1. HIỆU ỨNG ÁNH SÁNG CHUỘT (GIỮ NGUYÊN) --- */
 .mouse-glow {
     position: fixed; top: 0; left: 0;
     width: 600px; height: 600px;
@@ -405,19 +503,43 @@ nav {
     will-change: transform;
 }
 
-/* --- 2. LƯỚI HẠT TƯƠNG TÁC (PARTICLES CANVAS) --- */
 #particle-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; /* Không cản trở click */
-    z-index: 0; /* Nằm dưới cùng nhất */
+    pointer-events: none; 
+    z-index: 0; 
     opacity: 0;
     transition: opacity 0.7s ease;
 }
 
 #particle-canvas.active {
     opacity: 1;
+}
+
+/* --- Tinh chỉnh lưới hạt và Glow cho Light Mode --- */
+body.light-mode .mouse-glow {
+    opacity: 0.15;
+    mix-blend-mode: multiply;
+}
+
+/* KHẮC PHỤC LỖI TẠI ĐÂY: Mặc định lưới hạt ở chế độ sáng phải ẨN, chỉ HIỆN khi có class active */
+body.light-mode #particle-canvas {
+    opacity: 0;
+}
+
+body.light-mode #particle-canvas.active {
+    opacity: 0.4;
+}
+
+/* --- Ngăn chặn hành vi kéo thả ảnh mặc định của trình duyệt --- */
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    user-select: none; /* Ngăn chặn việc lỡ click đúp bị bôi đen ảnh */
 }
