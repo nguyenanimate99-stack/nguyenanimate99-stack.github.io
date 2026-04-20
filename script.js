@@ -12,7 +12,6 @@ const CONFIG = {
 
 // --- 0. CÁC HÀM TIỆN ÍCH GIAO DIỆN MỚI (TOAST & CONFIRM) ---
 
-// Hàm hiện thông báo đẹp (thay cho alert)
 function showToast(message, type = 'success') {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
@@ -24,14 +23,12 @@ function showToast(message, type = 'success') {
     
     container.appendChild(toast);
 
-    // Tự xóa sau 1.5 giây
     setTimeout(() => {
         toast.style.animation = "fadeOut 0.5s forwards";
         setTimeout(() => toast.remove(), 500);
     }, 3000);
 }
 
-// Hàm hiện hộp thoại xác nhận (thay cho confirm)
 function showConfirm(message, callbackYes) {
     const overlay = document.getElementById('custom-confirm');
     const msgEl = document.getElementById('confirm-message');
@@ -40,7 +37,6 @@ function showConfirm(message, callbackYes) {
     msgEl.innerText = message;
     overlay.classList.remove('hidden'); 
     
-    // Gán sự kiện cho nút Đồng ý (dùng onclick để tránh gán chồng sự kiện cũ)
     btnYes.onclick = function() {
         callbackYes(); 
         closeConfirm();
@@ -51,28 +47,38 @@ function closeConfirm() {
     document.getElementById('custom-confirm').classList.add('hidden');
 }
 
-
 // --- 1. LOGIC CHUYỂN TRANG & BẢO MẬT ---
 
 function goHome() {
     document.getElementById('home-section').classList.remove('hidden');
     document.getElementById('main-app').classList.add('hidden');
+    document.getElementById('notification-section').classList.add('hidden');
     
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
     document.getElementById('btn-home').classList.add('active');
 }
 
+function openNotifications() {
+    document.getElementById('home-section').classList.add('hidden');
+    document.getElementById('notification-section').classList.remove('hidden');
+}
+
+function closeNotifications() {
+    document.getElementById('notification-section').classList.add('hidden');
+    document.getElementById('home-section').classList.remove('hidden');
+}
+
 function switchCategory(categoryName) {
-    // BẢO MẬT: Kiểm tra đăng nhập
     if (!CONFIG.currentUser) {
         showToast("Vui lòng đăng nhập để xem mục này!", "error");
-        setTimeout(toggleLogin, 200); // Đợi 1s rồi hiện bảng login
+        setTimeout(toggleLogin, 200); 
         return;
     }
 
     if (!MENU_CONFIG[categoryName]) return;
 
     document.getElementById('home-section').classList.add('hidden');
+    document.getElementById('notification-section').classList.add('hidden');
     document.getElementById('main-app').classList.remove('hidden');
 
     CONFIG.currentCategory = categoryName;
@@ -88,13 +94,17 @@ function switchCategory(categoryName) {
 
 // --- 2. LOGIC ĐĂNG NHẬP (FIREBASE THẬT) ---
 
-// Tự động kiểm tra trạng thái đăng nhập khi load trang
-setTimeout(() => {
+// Kiểm tra liên tục mỗi 50ms xem thư viện Firebase đã tải xong chưa thay vì đợi 300ms
+const checkAuthInterval = setInterval(() => {
     if (window.firebaseLibs && window.firebaseLibs.onAuthStateChanged) {
+        clearInterval(checkAuthInterval); // Dừng kiểm tra khi đã tìm thấy thư viện
+
         const { auth, onAuthStateChanged } = window.firebaseLibs;
+        
         onAuthStateChanged(auth, (user) => {
+            CONFIG.isAuthReady = true; // <-- Firebase đã xác nhận xong trạng thái (dù có hay không có user)
+
             if (user) {
-                // Người dùng đã đăng nhập từ trước
                 CONFIG.currentUser = user;
                 updateUserInterface(user);
             } else {
@@ -102,11 +112,9 @@ setTimeout(() => {
             }
         });
     }
-}, 300);
-
+}, 50);
 function toggleLogin() {
     if (CONFIG.currentUser) {
-        // Dùng hộp thoại xác nhận mới
         showConfirm("Bạn có chắc chắn muốn đăng xuất?", handleLogout);
     } else {
         document.getElementById('login-overlay').classList.remove('hidden');
@@ -176,7 +184,6 @@ function handleLogout() {
 
 // --- 3. LOGIC TẢI XUỐNG VÀ LƯU LỊCH SỬ ---
 
-// Hàm lưu lịch sử tải xuống lên Firebase Firestore
 async function trackUserDownload(fileName, fileLink) {
     if (!CONFIG.currentUser || !window.firebaseLibs || !window.firebaseLibs.db) return;
 
@@ -211,7 +218,6 @@ function updateDownloadButton() {
     }
 }
 
-// Hàm tải file ẩn ngay trên trang (dành cho tải từng file trực tiếp)
 function downloadInPage(url) {
     showToast("Đang kiểm Tra Quyền Của Bạn...", "success");
     const iframe = document.createElement('iframe');
@@ -219,7 +225,6 @@ function downloadInPage(url) {
     iframe.src = url;
     document.body.appendChild(iframe);
     
-    // Xóa iframe sau 10 giây để tránh rác DOM
     setTimeout(() => {
         document.body.removeChild(iframe);
     }, 10000);
@@ -234,17 +239,13 @@ function handleDownload() {
     }
 
     if (CONFIG.currentLink && CONFIG.currentLink !== "#") {
-        // Lưu lịch sử tải toàn bộ
         trackUserDownload("Tải toàn bộ mục: " + CONFIG.currentCategory, CONFIG.currentLink);
-        
-        // GIỮ NGUYÊN MỞ TAB MỚI CHO GOOGLE DRIVE ĐỂ CHỌN FILE
         window.open(CONFIG.currentLink, '_blank');
     } else {
         showToast("Mục này chưa có link tải chung. Hãy chọn từng ảnh!", "error");
     }
 }
 
-// --- HÀM XỬ LÝ CLICK VÀO ẢNH ---
 function handleCardClick(item) {
     if (!CONFIG.currentUser) {
         showToast("Vui lòng đăng nhập để tải ảnh này!", "error");
@@ -257,15 +258,13 @@ function handleCardClick(item) {
         return;
     }
 
-    // Lưu lịch sử tải từng ảnh
     trackUserDownload(item.title, item.driveLink);
 
     const directLink = convertToDirectLink(item.driveLink);
-    // DÙNG IFRAME ẨN ĐỂ TẢI TRỰC TIẾP KHÔNG MỞ TAB MỚI
     downloadInPage(directLink);
 }
 
-// --- CÁC HÀM GIAO DIỆN (GIỮ NGUYÊN) ---
+// --- CÁC HÀM GIAO DIỆN ---
 
 function updateActiveMenu() {
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -278,7 +277,6 @@ function updateActiveMenu() {
         "DONG_VAT": 'btn-dongvat',
         "BIEU_CAM_&_CU_CHI": 'btn-bieucam&cuchi',
         "VAT_LIEU_MIEN_PHI": 'btn-vatlieumienphi',
-
     };
     const currentId = menuId[CONFIG.currentCategory];
     if(currentId) {
@@ -385,7 +383,6 @@ function renderGrid(currentTab, currentTag, currentPage) {
             card.onclick = () => { handleCardClick(item); };
 
             let imageHTML = ``;
-            // CẬP NHẬT: Gộp thành 1 thẻ img duy nhất để tối ưu load trang và bắt lỗi ảnh hỏng
             if (item.gif && item.gif !== "") {
                 imageHTML = `
                     <img 
@@ -449,26 +446,23 @@ function appRun(tab, tag, page) {
     renderGrid(tab, tag, page);
 }
 
-/* --- TÍNH NĂNG MỚI: TỰ ĐỘNG CUỘN LÊN ĐẦU TRANG --- */
 document.addEventListener('click', function(e) {
-    // Kiểm tra nếu bấm vào: Phân trang, Tab, Bộ lọc, hoặc Menu chính
     if (e.target.closest('.page-btn') || 
         e.target.closest('.tab-btn') || 
         e.target.closest('.filter-pill') ||
         e.target.closest('.nav-item')) {
         
-        // Cuộn ngay lập tức lên đầu (behavior: 'auto' để nhảy nhanh, 'smooth' để trượt từ từ)
         window.scrollTo({
             top: 0,
             behavior: 'auto' 
         });
     }
 });
+
 /* =========================================
    CÁC TÍNH NĂNG TƯƠNG TÁC PC HOÀN CHỈNH
 ========================================= */
 
-// --- 1. HIỆU ỨNG ẨN/HIỆN THANH MENU TRÊN PC KHI CUỘN ---
 let lastScrollTop = 0;
 const navbar = document.querySelector('nav');
 
@@ -483,11 +477,10 @@ window.addEventListener('scroll', function() {
 });
 
 const homeSection = document.getElementById('home-section');
+const notificationSection = document.getElementById('notification-section');
 
-// Xóa các hiệu ứng cũ để tránh lỗi dán đè
 document.querySelectorAll('.mouse-glow, #rain-container, #particle-canvas').forEach(el => el.remove());
 
-// --- 2. HIỆU ỨNG ÁNH SÁNG CHUỘT (GLOW) ---
 const glowEl = document.createElement('div');
 glowEl.className = 'mouse-glow';
 document.body.appendChild(glowEl);
@@ -495,11 +488,15 @@ document.body.appendChild(glowEl);
 let mouseX = -1000;
 let mouseY = -1000;
 
+function isHomeVisible() {
+    return (!homeSection.classList.contains('hidden') || !notificationSection.classList.contains('hidden'));
+}
+
 document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     
-    if (!homeSection.classList.contains('hidden')) {
+    if (isHomeVisible()) {
         glowEl.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
         glowEl.style.opacity = document.body.classList.contains('light-mode') ? '0.15' : '0.08';
     } else {
@@ -513,18 +510,15 @@ document.addEventListener('mouseleave', () => {
     mouseY = -1000;
 });
 
-
-// --- 3. HIỆU ỨNG LƯỚI HẠT TƯƠNG TÁC (PARTICLES NETWORK) ---
 const canvas = document.createElement('canvas');
 canvas.id = 'particle-canvas';
 document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d');
 
 let particlesArray = [];
-const connectionDistance = 120; // Khoảng cách nối các hạt với nhau
-const mouseConnectionDistance = 180; // Khoảng cách tia sáng nối từ chuột tới hạt
+const connectionDistance = 120;
+const mouseConnectionDistance = 180;
 
-// Cập nhật kích thước canvas theo màn hình
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -532,20 +526,18 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Khởi tạo đối tượng Hạt
 class Particle {
     constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1; // Kích thước hạt
-        this.speedX = (Math.random() - 0.5) * 1.2; // Tốc độ trôi ngang
-        this.speedY = (Math.random() - 0.5) * 1.2; // Tốc độ trôi dọc
+        this.size = Math.random() * 2 + 1; 
+        this.speedX = (Math.random() - 0.5) * 1.2; 
+        this.speedY = (Math.random() - 0.5) * 1.2; 
     }
     update() {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        // Dội ngược lại khi chạm viền màn hình
         if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
         if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
     }
@@ -557,10 +549,8 @@ class Particle {
     }
 }
 
-// Sinh ra các hạt
 function initParticles() {
     particlesArray = [];
-    // Tính toán số lượng hạt dựa trên độ lớn màn hình cho vừa vặn
     const numberOfParticles = (canvas.width * canvas.height) / 12000; 
     for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle());
@@ -568,11 +558,9 @@ function initParticles() {
 }
 initParticles();
 
-// Vòng lặp vẽ lại liên tục (60 FPS)
 function animateParticles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    // Đọc màu sắc dựa theo chế độ Sáng/Tối
     const isLightMode = document.body.classList.contains('light-mode');
     const r = isLightMode ? 0 : 255;
     const g = isLightMode ? 0 : 204;
@@ -583,7 +571,6 @@ function animateParticles() {
         particlesArray[i].update();
         particlesArray[i].draw(baseColor);
 
-        // 1. Nối các hạt với nhau
         for (let j = i; j < particlesArray.length; j++) {
             const dx = particlesArray[i].x - particlesArray[j].x;
             const dy = particlesArray[i].y - particlesArray[j].y;
@@ -600,8 +587,7 @@ function animateParticles() {
             }
         }
 
-        // 2. Nối hạt với con trỏ chuột
-        if (!homeSection.classList.contains('hidden') && mouseX > 0 && mouseY > 0) {
+        if (isHomeVisible() && mouseX > 0 && mouseY > 0) {
             const dxMouse = particlesArray[i].x - mouseX;
             const dyMouse = particlesArray[i].y - mouseY;
             const distanceMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
@@ -610,7 +596,7 @@ function animateParticles() {
                 const opacityMouse = 1 - (distanceMouse / mouseConnectionDistance);
                 ctx.beginPath();
                 ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacityMouse * 0.8})`;
-                ctx.lineWidth = 1.5; // Dây nối với chuột sẽ đậm hơn một chút
+                ctx.lineWidth = 1.5; 
                 ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
                 ctx.lineTo(mouseX, mouseY);
                 ctx.stroke();
@@ -621,9 +607,8 @@ function animateParticles() {
 }
 animateParticles();
 
-// Bật/tắt canvas khi ở trang chủ hoặc đã bấm vào Khám phá
 setInterval(() => {
-    if (!homeSection.classList.contains('hidden')) {
+    if (isHomeVisible()) {
         canvas.classList.add('active');
     } else {
         canvas.classList.remove('active');
