@@ -11,7 +11,7 @@ const MENU_CONFIG = {
     "HIEU_UNG": ["HU_DAC_BIET", "HU_THONG_THUONG"],
     "DONG_VAT": ["DV_DONG_VAT", "DV_QUAI_VAT"],
     "BIEU_CAM_&_CU_CHI": ["BIEU_CAM", "CU_CHI"],
-    "VAT_LIEU_MIEN_PHI": ["NHAN_VAT", "KHUNG_CANH", "DAO_CU", "DONG_VAT"],
+    "VAT_LIEU_MIEN_PHI": ["NHAN_VAT", "KHUNG_CANH", "DAO_CU", "DONG_VAT", "PHAN_MEM"],
 
 };
 
@@ -31,7 +31,6 @@ const TAG_INFO = {
     "NV Cổ Điển": { title: "Nhân Vật <span>Cổ Điển</span>", link: "https://drive.google.com/drive/folders/1Tu_qn-vx1AVXKQ3Rxeo7hvNev2ojlDYq?usp=drive_link" },
     
     "NV Cổ Xưa": { title: "Nhân Vật <span>Cổ Xưa</span>", link: "https://drive.google.com/drive/folders/10ViSJlDF5_4Ldy02siL-BQXcqm-pqp3r?usp=drive_link" },
-    "NV Xưa Cổ Điển": { title: "Nhân Vật <span>Xưa Cổ Điển</span>", link: "https://drive.google.com/drive/folders/11qxBEMIGuw-JY3VvdFU-GCg0ZEE6zwLd?usp=drive_link" },
     "NV Tu Tiên": { title: "Nhân Vật <span>Tu Tiên</span>", link: "https://drive.google.com/drive/folders/1UfG9fEEJWH4SE7CprCshyOZ2S7md25BX?usp=drive_link" },
     "NV Chủ Đề": { title: "Nhân Vật <span>Chủ Đề</span>", link: "https://drive.google.com/drive/folders/1_ZFbt2oRJm1NheBTIRkLnkDYQcUvmt38?usp=drive_link" },
     "NV Ma Quỷ Kinh Dị": { title: "Nhân Vật <span>Ma Quỷ Kinh Dị</span>", link: "https://drive.google.com/drive/folders/1r-m9jXyYeNZYhVMxm4b-kvNayb-aqwRZ?usp=drive_link" },
@@ -115,6 +114,7 @@ const TAG_INFO = {
 
     // --- DỮ LIỆU (VẬT LIỆU MIỄN PHÍ) ---
     "Nhân Vật Đời Sống": { title: "NHÂN VẬT <span>Đời Sống</span>", link: "https://drive.google.com/drive/folders/10S5b8JduSq6XS3KmwryX7niNkyEdfIUH?usp=drive_link" },
+    "NV Xưa Cổ Điển": { title: "Nhân Vật <span>Xưa Cổ Điển</span>", link: "https://drive.google.com/drive/folders/11qxBEMIGuw-JY3VvdFU-GCg0ZEE6zwLd?usp=drive_link" },
 
     "Khung Cảnh Hiện Đại": { title: "Khung Cảnh <span>Hiện Đại</span>", link: "https://drive.google.com/drive/folders/1xN2uj33RQEvxSBKJ3G9p8meVQZKPoIzx?usp=drive_link" },
     "Khung Cảnh Ngoài Trời": { title: "Khung Cảnh <span>Ngoài Trời</span>", link: "https://drive.google.com/drive/folders/1N2hJGOWkgKjzsucNb5J9c2uRgse4U4un?usp=drive_link" },
@@ -123,13 +123,14 @@ const TAG_INFO = {
     "Đạo Cụ Hệ Thống": { title: "Đạo Cụ <span>Hệ Thống</span>", link: "https://drive.google.com/drive/folders/1lqnSlZVoFarpVdwkynxhlO3LHhgyddCD?usp=drive_link" },
 
     "Động Vật": { title: "Động <span>Vật</span>", link: "https://drive.google.com/drive/folders/1VuaugYjkLadk5YLqAnSAwC2h9khkgvDZ?usp=sharing" },
+    "Phần Mềm": { title: "Phần <span>Mềm</span>", link: "https://drive.google.com/drive/folders/1oT7TNg_aJIu-u9NF4tQlIlhazfvtSdfP?usp=sharing" },
 
 };
 
 // 3. Danh sách Tag cho từng Tab
 const TAG_LIST = {
     "NV_HIEN_DAI": ["NV Hiện Đại", "NV Thành Thị", "NV Đa Góc Nhìn", "NV 8090", "NV Xã Hội Đen", "NV Trò Chơi", "NV Tương Lai", "NV Đô Thị", "NV Cổ Điển"],
-    "NV_CO_XUA": ["NV Cổ Xưa", "NV Xưa Cổ Điển", "NV Tu Tiên", "NV Chủ Đề", "NV Ma Quỷ Kinh Dị", "NV Kẻ Trộm Mộ", "NV Hà Nhân", "NV Cổ Xưa Tổng Hợp"],
+    "NV_CO_XUA": ["NV Cổ Xưa", "NV Tu Tiên", "NV Chủ Đề", "NV Ma Quỷ Kinh Dị", "NV Kẻ Trộm Mộ", "NV Hà Nhân", "NV Cổ Xưa Tổng Hợp"],
 
     "KC_HIEN_DAI": ["KC Thành Phố Hiện Đại", "KC Mùa Đông", "KC Chiến Trường", "KC Lăng Mộ", "KC Thành Phố U Ám", "KC Thập Niên 8090","KC Trò Chơi", "KC Tương Lai", "KC Ngoài Trời & Bắt Hải Sản", "KC Tổng Hợp"],
     "KC_CO_XUA": ["KC Cổ Xưa", "KC Tu Tiên"],
@@ -150,9 +151,9 @@ const TAG_LIST = {
     "BIEU_CAM": ["BC Chàng Trai", "BC Nữ", "BC Người Lớn Tuổi", "BC Khác"],
     "CU_CHI": ["VL Bàn Tay"],
 
-    "NHAN_VAT": ["Nhân Vật Đời Sống"],
+    "NHAN_VAT": ["Nhân Vật Đời Sống", "NV Xưa Cổ Điển"],
     "KHUNG_CANH": ["Khung Cảnh Hiện Đại", "Khung Cảnh Ngoài Trời", "Khung Cảnh Cổ Đại"],
     "DAO_CU": ["Đạo Cụ Hệ Thống"],
     "DONG_VAT": ["Động Vật"],
-    
+    "PHAN_MEM": ["Phần Mềm"],
 };
