@@ -119,7 +119,6 @@ async function khoiTaoDuLieu() {
         
 
         addBatch("NV_CO_XUA", "NV Cổ Xưa", "NHANVAT/Nhân Vật Cổ Xưa", taoDanhSachTuDong(601, "Nhân Vật Cổ Xưa ", ".webp", linkMap["Nhân Vật Cổ Xưa"]));
-        addBatch("NV_CO_XUA", "NV Xưa Cổ Điển", "NHANVAT/Nhân Vật Xưa Cổ Điển", taoDanhSachTuDong(32, "Nhân Vật Xưa Cổ Điển ", ".webp", linkMap["Nhân Vật Xưa Cổ Điển"]));
         addBatch("NV_CO_XUA", "NV Tu Tiên", "NHANVAT/Nhân Vật Tu Tiên", taoDanhSachTuDong(74, "Nhân Vật Tu Tiên ", ".webp", linkMap["Nhân Vật Tu Tiên"]));
         addBatch("NV_CO_XUA", "NV Chủ Đề", "NHANVAT/Nhân Vật Chủ Đề", taoDanhSachTuDong(52, "Nhân Vật Chủ Đề ", ".webp", linkMap["Nhân Vật Chủ Đề"]));
         addBatch("NV_CO_XUA", "NV Ma Quỷ Kinh Dị", "NHANVAT/Ma Quỷ Kinh Dị", taoDanhSachTuDong(26, "Ma Quỷ Kinh Dị ", ".webp", linkMap["Ma Quỷ Kinh Dị"]));
@@ -204,6 +203,7 @@ async function khoiTaoDuLieu() {
 
         // --- MỤC 8: VẬT LIỆU MIỄN PHÍ (Mới thêm - Ví dụ dùng .gif) ---
         addBatch("NHAN_VAT", "Nhân Vật Đời Sống", "VATLIEUMIENPHI/Nhân Vật Đời Sống", taoDanhSachTuDong(72, "Nhân Vật Đời Sống ", ".webp", linkMap["Nhân Vật Đời Sống"]));
+        addBatch("NHAN_VAT", "NV Xưa Cổ Điển", "VATLIEUMIENPHI/Nhân Vật Xưa Cổ Điển", taoDanhSachTuDong(32, "Nhân Vật Xưa Cổ Điển ", ".webp", linkMap["Nhân Vật Xưa Cổ Điển"]));
 
         addBatch("KHUNG_CANH", "Khung Cảnh Hiện Đại", "VATLIEUMIENPHI/Khung Cảnh Hiện Đại", taoDanhSachTuDong(234, "Khung Cảnh Hiện Đại ", ".webp", linkMap["Khung Cảnh Hiện Đại"]));
         addBatch("KHUNG_CANH", "Khung Cảnh Ngoài Trời", "VATLIEUMIENPHI/Khung Cảnh Ngoài Trời", taoDanhSachTuDong(225, "Khung Cảnh Ngoài Trời ", ".webp", linkMap["Khung Cảnh Ngoài Trời"]));
@@ -212,6 +212,9 @@ async function khoiTaoDuLieu() {
         addBatch("DAO_CU", "Đạo Cụ Hệ Thống", "VATLIEUMIENPHI/Đạo Cụ Hệ Thống", taoDanhSachTuDong(116, "Đạo Cụ Hệ Thống ", ".webp", linkMap["Đạo Cụ Hệ Thống"]));
 
         addBatch("DONG_VAT", "Động Vật", "VATLIEUMIENPHI/Động Vật", taoDanhSachTuDong(24, "Động Vật ", ".gif", linkMap["Động Vật"]));
+
+        addBatch("PHAN_MEM", "Phần Mềm", "VATLIEUMIENPHI/Phần Mềm", taoDanhSachTuDong(1, "Phần Mềm ", ".webp", linkMap["Phần Mềm"]));
+        
 
         console.log("Đã tải xong dữ liệu! Tổng số ảnh:", ALL_IMAGES.length);
         // 5. KÍCH HOẠT LẠI GIAO DIỆN
