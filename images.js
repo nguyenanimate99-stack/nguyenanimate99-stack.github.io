@@ -109,7 +109,7 @@ async function khoiTaoDuLieu() {
         // Các dòng này dùng kho 1 (mặc định) vì không điền tham số cuối
         addBatch("NV_HIEN_DAI", "NV Hiện Đại", "NHANVAT/Nhân Vật Hiện Đại", taoDanhSachTuDong(120, "Nhân Vật Hiện Đại ", ".webp", linkMap["Nhân Vật Hiện Đại"]));
         addBatch("NV_HIEN_DAI", "NV Thành Thị", "NHANVAT/Nhân Vật Thành Thị", taoDanhSachTuDong(128, "Nhân Vật Thành Thị ", ".webp", linkMap["Nhân Vật Thành Thị"]));
-        addBatch("NV_HIEN_DAI", "NV Đa Góc Nhìn", "NHANVAT/Nhân Vật Đa Góc Nhìn", taoDanhSachTuDong(4, "Nhân Vật Đa Góc Nhìn ", ".webp", linkMap["Nhân Vật Đa Góc Nhìn"]));
+        addBatch("NV_HIEN_DAI", "NV Đa Góc Nhìn", "NHANVAT/Nhân Vật Đa Góc Nhìn", taoDanhSachTuDong(15, "Nhân Vật Đa Góc Nhìn ", ".webp", linkMap["Nhân Vật Đa Góc Nhìn"]));
         addBatch("NV_HIEN_DAI", "NV 8090", "NHANVAT/Nhân Vật 8090", taoDanhSachTuDong(56, "Nhân Vật 8090 ", ".webp", linkMap["Nhân Vật 8090"]));
         addBatch("NV_HIEN_DAI", "NV Xã Hội Đen", "NHANVAT/Nhân Vật Xã Hội Đen", taoDanhSachTuDong(29, "Nhân Vật Xã Hội Đen ", ".webp", linkMap["Nhân Vật Xã Hội Đen"]));
         addBatch("NV_HIEN_DAI", "NV Trò Chơi", "NHANVAT/Nhân Vật Trò Chơi", taoDanhSachTuDong(15, "Nhân Vật Trò Chơi ", ".webp", linkMap["Nhân Vật Trò Chơi"]));
