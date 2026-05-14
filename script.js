@@ -383,9 +383,11 @@ function renderGrid(currentTab, currentTag, currentPage) {
             card.onclick = () => { handleCardClick(item); };
 
             let imageHTML = ``;
+            // --- ĐÃ THÊM THUỘC TÍNH loading="lazy" Ở ĐÂY ĐỂ CHỐNG NGỘP ẢNH ---
             if (item.gif && item.gif !== "") {
                 imageHTML = `
                     <img 
+                        loading="lazy"
                         src="${item.img}" 
                         data-static="${item.img}" 
                         data-gif="${item.gif}" 
@@ -398,7 +400,7 @@ function renderGrid(currentTab, currentTag, currentPage) {
                 `;
             } else {
                 imageHTML = `
-                    <img src="${item.img}" onerror="this.onerror=null; this.src=this.src.replace('.gif', '.webp');" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;" alt="${item.title}">
+                    <img loading="lazy" src="${item.img}" onerror="this.onerror=null; this.src=this.src.replace('.gif', '.webp');" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0;" alt="${item.title}">
                 `;
             }
 
