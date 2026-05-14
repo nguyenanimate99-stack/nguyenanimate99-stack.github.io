@@ -98,7 +98,7 @@ nav {
     letter-spacing: 2px; 
     color: var(--text-color); 
     word-wrap: break-word; /* Chống tràn chữ */
-    white-space: nowrap; /* Ưu tiên không rớt dòng nếu có thể */
+    white-space: normal; /* Cho phép rớt dòng khi chữ quá dài */
 }
 .main-title span { color: var(--accent-color); text-shadow: 0 0 20px rgba(255, 204, 0, 0.3); }
 
