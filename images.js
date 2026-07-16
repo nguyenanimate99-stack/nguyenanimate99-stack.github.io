@@ -213,7 +213,7 @@ async function khoiTaoDuLieu() {
 
         addBatch("DONG_VAT", "Động Vật", "VATLIEUMIENPHI/Động Vật", taoDanhSachTuDong(24, "Động Vật ", ".gif", linkMap["Động Vật"]));
 
-        addBatch("PHAN_MEM", "Phần Mềm", "VATLIEUMIENPHI/Phần Mềm", taoDanhSachTuDong(1, "Phần Mềm ", ".webp", linkMap["Phần Mềm"]));
+        addBatch("PHAN_MEM", "Phần Mềm", "VATLIEUMIENPHI/Phần Mềm", taoDanhSachTuDong(2, "Phần Mềm ", ".webp", linkMap["Phần Mềm"]));
         
 
         console.log("Đã tải xong dữ liệu! Tổng số ảnh:", ALL_IMAGES.length);
